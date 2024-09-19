@@ -1,0 +1,66 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '~owl.carousel/dist/assets/owl.carousel.css';
+@import '~owl.carousel/dist/assets/owl.theme.default.css';
+
+
+@font-face {
+  font-family: "AbrilRegular";
+
+  src: url("../src/fonts/AbrilFatface-Regular.ttf");
+}
+@font-face {
+  font-family: "QuicksandBold";
+
+  src: url("./fonts/Quicksand-Bold.otf");
+}
+@font-face {
+  font-family: "ConamoreM";
+
+  src: url("./fonts/AvenirLTStd-Black.otf");
+}
+@font-face {
+  font-family: "AbrilRegular";
+
+  src: url("../src/fonts/AbrilFatface-Regular.ttf");
+}
+@font-face {
+  font-family: "avenirBook";
+
+  src: url("./fonts/AvenirLTStd-Book.otf");
+}
+@font-face {
+  font-family: "gorditaBold";
+
+  src: url("./fonts/Gordita\ Bold.woff");
+}
+@font-face {
+  font-family: "gorditaMedium";
+
+  src: url("./fonts/Gordita\ Medium.woff");
+}
+@font-face {
+  font-family: "gorditaRegular";
+
+  src: url("./fonts/Gordita\ Regular.woff");
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* Add these styles to your global stylesheet or a CSS module */
+
+
+
