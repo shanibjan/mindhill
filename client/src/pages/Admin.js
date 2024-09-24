@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
-import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
+
 import AdminProducts from "../components/AdminProducts";
 import AddProducts from "../components/AddProducts";
+import ManageUserOrders from "../components/ManageUserOrders";
 
 
 const Admin = () => {
@@ -39,7 +39,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
-      {component==="Products"? <AdminProducts/>:component==="AddProducts"? <AddProducts/>:null}
+      {component==="Products"? <AdminProducts/>:component==="AddProducts"? <AddProducts/>:<ManageUserOrders/>}
      
      
     </div>
