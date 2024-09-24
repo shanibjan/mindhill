@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LoginHeader from "../components/LoginHeader";
 import Footer from "../components/Footer";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
 const Signup = () => {
     const nav=useNavigate()
@@ -9,6 +10,28 @@ const Signup = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
       }, [pathname]);
+
+     
+    const [name,setName]=useState()
+    const [email,setEmail]=useState()
+    const [password,setPassword]=useState()
+    const [phone,setPhone]=useState()
+
+    const register=async()=>{
+        try {
+          const res=await axios.post('/api/v1/auth/register',{name,email,password,phone})
+            console.log(res.data);
+            if(res.data.success){
+              window.alert(res.data.message)
+            nav('/login')
+          }else{
+              window.alert(res.data.message)
+          }
+          
+        } catch (error) {
+          window.alert(error.response.data.error);
+        }
+    }
   return (
     <div>
      
@@ -24,30 +47,34 @@ const Signup = () => {
         </h4>
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
-          type="taxt"
+          type="text"
           placeholder="Username"
+          value={name} onChange={(e)=>setName(e.target.value)}
         />
         <br />
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
           type="email"
           placeholder="Email"
+          value={email} onChange={(e)=>setEmail(e.target.value)}
         />
         <br />
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
           type="number"
           placeholder="Phone"
+          value={phone} onChange={(e)=>setPhone(e.target.value)}
         />
         <br />
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
           type="password"
           placeholder="Password"
+          value={password} onChange={(e)=>setPassword(e.target.value)}
         />
         <br />
 
-        <button  className="bg-[#94C4F7] py-[1%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] mb-[5%]  text-white">
+        <button onClick={register}  className="bg-[#94C4F7] py-[1%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] mb-[5%]  text-white">
           REGISTER
         </button>
         <h4 onClick={()=> nav('/login')} className="text-[20px] font-gorditaMedium text-[#244262] my-[3%] cursor-pointer">

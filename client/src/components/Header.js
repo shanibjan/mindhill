@@ -18,8 +18,13 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "animate.css/animate.min.css";
 import ReactOwlCarousel from "react-owl-carousel";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  
+  const nav=useNavigate()
+  
   const bgMap = [
     {
       id: 1,
@@ -97,9 +102,12 @@ const Header = () => {
                     <FontAwesomeIcon icon={faUser} className="h-[23px]" />
                   </div>
                   <ul className="dropdown-menu text-[#244262] leading-[35px] ">
-                    <li>Login</li>
-                    <li>Register</li>
+                    <li onClick={()=>{localStorage.removeItem('user');localStorage.removeItem('token'); nav('/login')}
+                     
+                    } >{user?"Logout":"Login"}</li>
+                    <li>{user?"":"Register"}</li>
                     <li>Admin</li>
+                    <li>{user?"My orders":""}</li>
                   </ul>
                 </div>
               </div>
