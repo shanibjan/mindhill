@@ -81,7 +81,7 @@ const Products = () => {
   return (
     <div>
       <div>
-        <div className="px-[30%] py-[4%]">
+        <div className=" py-[4%]">
           <h2 className="font-AbrilRegular text-[60px] text-[#244262]">
             New Products
           </h2>

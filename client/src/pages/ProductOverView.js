@@ -15,11 +15,14 @@ import p111 from "../images/product-11-1.jpg";
 import p112 from "../images/product-11-2.jpg";
 import p113 from "../images/product-11-3.jpg";
 import Reviews from "../components/Reviews";
+import Footer from "../components/Footer";
 
 const ProductOverView = () => {
   const [image, setImage] = useState(p11);
   const [qty, setQty] = useState(1);
   const [bg, setBg] = useState("Description");
+  const stars= ["✩", "✩", "✩", "✩", "✩"]
+  const rating=3
 
   return (
     <div>
@@ -42,8 +45,15 @@ const ProductOverView = () => {
             <h1 className="text-[40px] font-AbrilRegular text-[#244262] ">
               Spinach
             </h1>
-            <div className="flex font-gorditaRegular my-[3%] text-[#244262]  ">
-              <h4>★★★★★</h4>
+            <div className="flex font-gorditaRegular my-[3%] text-[#244262] items-center   ">
+              <div className="mr-[5%] grid grid-cols-5 gap-x-2  text-[23px] " >
+                
+                {stars.map((star,index)=>{
+                  return(
+                    <h4>{index<rating?"★":star}</h4>
+                  )
+                })}
+              </div>
               <h4>(1 Customer review)</h4>
             </div>
             <div className="flex justify-start font-AbrilRegular text-[30px] ">
@@ -185,6 +195,7 @@ const ProductOverView = () => {
         
         
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import p11 from "../images/product-11.jpg";
+import Footer from "../components/Footer";
 
 const Cart = () => {
     const[radio,setRadio]=useState()
@@ -130,6 +131,7 @@ const Cart = () => {
             </button>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

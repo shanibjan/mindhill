@@ -2,18 +2,18 @@ import React from "react";
 import bg1 from "../images/bg-1.jpg";
 import bg2 from "../images/bg-2.jpg";
 import bg3 from "../images/bg-3.jpg";
-import icon1 from '../images/icon-1.webp'
-import icon2 from '../images/icon-2.webp'
-import icon3 from '../images/icon-3.webp'
-import icon4 from '../images/icon-4.webp'
-import icon5 from '../images/icon-5.webp'
-import icon6 from '../images/icon-6.webp'
+import icon1 from "../images/icon-1.webp";
+import icon2 from "../images/icon-2.webp";
+import icon3 from "../images/icon-3.webp";
+import icon4 from "../images/icon-4.webp";
+import icon5 from "../images/icon-5.webp";
+import icon6 from "../images/icon-6.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBasket,
-  faSearch,
-  faEllipsisH,
+  faSearch
 } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "animate.css/animate.min.css";
@@ -78,23 +78,29 @@ const Header = () => {
               <div>
                 <h2 className="font-AbrilRegular text-[40px]">MIND HILL</h2>
               </div>
-              <div className="flex justify-between w-[50%] items-center font-gorditaMedium">
-                <h4>HOME</h4>
-                <h4>PAGES</h4>
-                <h4>SHOP</h4>
-                <h4>PORTFOLIO</h4>
-                <h4>BLOG</h4>
+              <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium">
+                
                 <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
+                  <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                </div>
+                <div className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
+                  <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
+                </div>
+                <div className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
                   <FontAwesomeIcon
                     icon={faShoppingBasket}
                     className="h-[23px]"
                   />
                 </div>
-                <div>
-                  <FontAwesomeIcon icon={faSearch} />
-                </div>
-                <div>
-                  <FontAwesomeIcon icon={faEllipsisH} />
+                <div className="dropdown">
+                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
+                    <FontAwesomeIcon icon={faUser} className="h-[23px]" />
+                  </div>
+                  <ul className="dropdown-menu text-[#244262] leading-[35px] ">
+                    <li>Login</li>
+                    <li>Register</li>
+                    <li>Admin</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -115,16 +121,16 @@ const Header = () => {
           </div>
         ))}
       </ReactOwlCarousel>
-      <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 py-[3%] px-[4%] gap-x-[5%] shadow-lg" >
+      <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 py-[3%] px-[4%] gap-x-[5%] shadow-lg">
         {icons.map((icon) => {
           return (
-            <div className="flex justify-between items-center " >
+            <div className="flex justify-between items-center ">
               <div>
-               <img className="w-full" src={icon.src} alt="" />
+                <img className="w-full" src={icon.src} alt="" />
               </div>
               <div>
-                <h2 className="font-AbrilRegular" >{icon.tag}</h2>
-                <h3 className="font-gorditaRegular" >{icon.subTag}</h3>
+                <h2 className="font-AbrilRegular">{icon.tag}</h2>
+                <h3 className="font-gorditaRegular">{icon.subTag}</h3>
               </div>
             </div>
           );
