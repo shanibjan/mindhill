@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import pIcon1 from "../images/p-icon-1.webp";
 import pIcon2 from "../images/p-icon-2.webp";
 import pIcon3 from "../images/p-icon-3.webp";
 import pIcon4 from "../images/p-icon-4.png";
 import pIcon5 from "../images/p-icon-5.webp";
 import pIcon6 from "../images/p-icon-6.png";
-import p11 from "../images/product-11.jpg";
-import p12 from "../images/product-12.jpg";
-import p13 from "../images/product-13.jpg";
-import p14 from "../images/product-14.jpg";
-import p15 from "../images/product-15.jpg";
-import p16 from "../images/product-16.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
+import axios from 'axios'
 
 const Products = () => {
   const [bgColor, setBgColor] = useState("Show All");
-  console.log(bgColor);
+  const [products,setProducts]=useState([])
+  console.log(products);
 
   const productIcons = [
     { src: pIcon1, category: "Show All" },
@@ -27,57 +23,25 @@ const Products = () => {
     { src: pIcon5, category: "Season Fruit" },
     { src: pIcon6, category: "Vegtables" },
   ];
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:7000/api/v1/product/get-product/'
+      );
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-  const products = [
-    {
-      src: p11,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1, 1],
-    },
-    {
-      src: p12,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1, 1, 1],
-    },
-    {
-      src: p13,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1, 1],
-    },
-    {
-      src: p14,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1],
-    },
-    {
-      src: p15,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1, 1, 1, 1, 1],
-    },
-    {
-      src: p16,
-      name: "Leaf",
-      price: "4",
-      offerPrice: "3",
-      star: ["☆", "☆", "☆", "☆", "☆"],
-      rev: [1],
-    },
-  ];
+  useEffect(()=>{
+    fetchData()
+  },[])
+
+  const star= ["☆", "☆", "☆", "☆", "☆"]
+
+  
+  
   return (
     <div>
       <div>
@@ -119,7 +83,7 @@ const Products = () => {
           return (
             <div
               style={{
-                background: `url(${product.src}) center/cover`,
+                background: `url(${product.img1}) center/cover`,
               }}
               className="relative h-[500px] "
             >
@@ -135,13 +99,13 @@ const Products = () => {
                     ${product.offerPrice}/kg
                   </p>
                   <p className="grid grid-cols-5 gap-x-2">
-                    {product.star.map((s, i) => {
-                      return <p>{i < product.rev.length ? "★" : "☆"}</p>;
+                    {star.map((s, i) => {
+                      return <p>{i < product.rating ? "★" : "☆"}</p>;
                     })}
                   </p>
                 </div>
                 <div className="w-[55%]">
-                  <div className="flex justify-end font-AbrilRegular text-[20px] ">
+                  <div className="flex justify-end font-AbrilRegular text-[20px] mb-[4%] ">
                     <h4 className="line-through text-[#244262] ">
                       ${product.price}
                     </h4>
