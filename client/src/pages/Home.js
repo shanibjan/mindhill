@@ -5,12 +5,12 @@ import Footer from '../components/Footer';
 import { useLocation } from 'react-router-dom';
 
 const Home = () => {
-  const location=useLocation()
+  
   
   
   return (
     <div>
-     <Header userDetails={location.state} />
+     <Header  />
      <Products/>
      <Footer/>
     </div>

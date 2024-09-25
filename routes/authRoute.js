@@ -58,10 +58,8 @@ router.post('/login',async(req,res)=>{
     
         // Validation
         if (!email || !password) {
-          return res.status(400).send({
-            success: false,
-            message: "Invalid email or password",
-          });
+          
+          return res.status(400).send({ error: 'All fields are required' });
         }
     
         // Check user

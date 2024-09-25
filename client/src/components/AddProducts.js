@@ -8,19 +8,20 @@ const AddProducts = ({ }) => {
     const[price,setPrice]=useState()
     const[offerPrice,setOfferPrice]=useState()
     const[rating,setRating]=useState()
-    
     console.log(image);
+    
+   
     
     const store = (e) => {
         let val = e.target.files[0];
     
-        console.log(val);
+      
         const reader = new FileReader();
         reader.readAsDataURL(val);
-        console.log(reader);
+       
         reader.addEventListener("load", () => {
           let imageLoader = reader.result;
-          console.log(imageLoader);
+         
           setImage((stateCopy) => {
             return [...stateCopy, { loader: imageLoader }];
           });
@@ -33,11 +34,13 @@ const AddProducts = ({ }) => {
             const res=await axios.post('/api/v1/product/add-product',{name,category,price,offerPrice,rating,img1:image[0].loader,img2:image[1].loader,img3:image[2].loader,img4:image[3].loader})
             console.log(res.data);
             if(res.data.success){
+              setImage([])
               window.alert(res.data.message)
              
           }else{
               window.alert(res.data.message)
           }
+
           } catch (error) {
             console.log(error);
             

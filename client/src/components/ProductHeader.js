@@ -7,7 +7,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import productOverView from '../images/product-overview.jpg'
+import { useNavigate } from 'react-router-dom';
 const ProductHeader = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const nav=useNavigate()
   return (
     <div>
      <div
@@ -18,7 +21,7 @@ const ProductHeader = () => {
             }}
           >
             <div className="flex justify-between text-white items-center">
-              <div>
+            <div onClick={()=>nav('/')} >
                 <h2 className="font-AbrilRegular text-[40px]">MIND HILL</h2>
               </div>
               <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium">
@@ -40,10 +43,12 @@ const ProductHeader = () => {
                     <FontAwesomeIcon icon={faUser} className="h-[23px]" />
                   </div>
                   <ul className="dropdown-menu text-[#244262] leading-[35px] ">
-                    <li>Login</li>
-                    <li>Register</li>
+                    <li onClick={()=>{localStorage.removeItem('user');localStorage.removeItem('token'); nav('/login')}
+                     
+                    } >{user?"Logout":"Login"}</li>
+                    <li>{user?"":"Register"}</li>
                     <li>Admin</li>
-                    <li>My Orders</li>
+                    <li>{user?"My orders":""}</li>
                   </ul>
                 </div>
               </div>

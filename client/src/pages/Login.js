@@ -23,7 +23,7 @@ const Login = () => {
           localStorage.setItem('user', JSON.stringify(res.data.user));
           if(res.data.success){
             window.alert(res.data.message)
-            nav('/',{state:res.data.user})
+            nav('/')
         }else{
             window.alert(res.data.message)
         }

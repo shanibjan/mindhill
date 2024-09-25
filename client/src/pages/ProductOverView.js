@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProductHeader from "../components/ProductHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -16,13 +16,33 @@ import p112 from "../images/product-11-2.jpg";
 import p113 from "../images/product-11-3.jpg";
 import Reviews from "../components/Reviews";
 import Footer from "../components/Footer";
+import { PostContext } from "../store/postContext";
+import { useLocation } from "react-router-dom";
+import axios from 'axios'
 
 const ProductOverView = () => {
-  const [image, setImage] = useState(p11);
+  const [image, setImage] = useState();
   const [qty, setQty] = useState(1);
+  const[review,setReview]=useState([])
+  console.log(review);
+  
   const [bg, setBg] = useState("Description");
   const stars= ["✩", "✩", "✩", "✩", "✩"]
-  const rating=3
+  const { pathname } = useLocation();
+  const{postDetails}=useContext(PostContext)
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  const fetchData=async()=>{
+    const res=await axios.get(`api/v1/product/get-review/${postDetails._id}`)
+    setReview(res.data);
+    
+  }
+  useEffect(()=>{
+    fetchData()
+  },[])
 
   return (
     <div>
@@ -30,31 +50,31 @@ const ProductOverView = () => {
       <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-x-16 py-[5%] px-[10%]">
         <div className="grid grid-row-2">
           <div className="h-full">
-            <img className="h-full object-cover" src={image} alt="" />
+            <img className="h-full object-cover" src={image?image:postDetails.img1} alt="" />
           </div>
           <div className="flex items-end">
             <div className="grid grid-cols-3 gap-[3%] mt-[3%]">
-              <img onMouseEnter={() => setImage(p111)} src={p111} alt="" />
-              <img onMouseEnter={() => setImage(p112)} src={p112} alt="" />
-              <img onMouseEnter={() => setImage(p113)} src={p113} alt="" />
+              <img onMouseEnter={() => setImage(postDetails.img2)} src={postDetails.img2} alt="" />
+              <img onMouseEnter={() => setImage(postDetails.img3)} src={postDetails.img3} alt="" />
+              <img onMouseEnter={() => setImage(postDetails.img4)} src={postDetails.img4} alt="" />
             </div>
           </div>
         </div>
         <div className="text-left flex items-center ">
           <div>
             <h1 className="text-[40px] font-AbrilRegular text-[#244262] ">
-              Spinach
+              {postDetails.name}
             </h1>
             <div className="flex font-gorditaRegular my-[3%] text-[#244262] items-center   ">
               <div className="mr-[5%] grid grid-cols-5 gap-x-2  text-[23px] " >
                 
                 {stars.map((star,index)=>{
                   return(
-                    <h4>{index<rating?"★":star}</h4>
+                    <h4>{index<postDetails.rating?"★":star}</h4>
                   )
                 })}
               </div>
-              <h4>(1 Customer review)</h4>
+              <h4>({review.length} Customer review)</h4>
             </div>
             <div className="flex justify-start font-AbrilRegular text-[30px] ">
               <h4 className="line-through text-[#244262] ">$3</h4>
@@ -168,7 +188,7 @@ const ProductOverView = () => {
               bg === "Reviews (1)" ? "bg-[#244262]" : "bg-[#94C4F7]"
             } p-[3%] cursor-pointer font-AbrilRegular text-left text-white`}
           >
-            <h4>Reviews (1)</h4>
+            <h4>Reviews ({review.length})</h4>
           </div>
         </div>
         {bg==="Description"?(<div className="py-[3%] px-[15%] font-gorditaRegular text-gray-500">
@@ -191,7 +211,7 @@ const ProductOverView = () => {
                 <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]" >Dimensions</h2>
                 <p className="font-gorditaRegular" >10 × 10 × 30 cm</p>
             </div>
-        </div>):(<Reviews/>)}
+        </div>):(<Reviews productId={postDetails._id} />)}
         
         
       </div>

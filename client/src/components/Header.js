@@ -80,7 +80,7 @@ const Header = () => {
             }}
           >
             <div className="flex justify-between text-white items-center">
-              <div>
+              <div onClick={()=>nav('/')} >
                 <h2 className="font-AbrilRegular text-[40px]">MIND HILL</h2>
               </div>
               <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import pIcon1 from "../images/p-icon-1.webp";
 import pIcon2 from "../images/p-icon-2.webp";
 import pIcon3 from "../images/p-icon-3.webp";
@@ -9,11 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
 import axios from 'axios'
+import { PostContext } from "../store/postContext";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const [bgColor, setBgColor] = useState("Show All");
   const [products,setProducts]=useState([])
-  console.log(products);
+  const nav=useNavigate()
+  const{setPostDetails}=useContext(PostContext)
 
   const productIcons = [
     { src: pIcon1, category: "Show All" },
@@ -40,6 +43,11 @@ const Products = () => {
 
   const star= ["☆", "☆", "☆", "☆", "☆"]
 
+  const filteredProducts=products.filter((filter)=>{
+    return(filter.category===bgColor)
+  })
+
+  console.log(filteredProducts);
   
   
   return (
@@ -79,9 +87,10 @@ const Products = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] gap-12 ">
-        {products.map((product) => {
+
+        { bgColor==="Show All" ?(products.map((product) => {
           return (
-            <div
+            <div onClick={()=>{setPostDetails(product);nav('/overview')}}
               style={{
                 background: `url(${product.img1}) center/cover`,
               }}
@@ -132,7 +141,60 @@ const Products = () => {
               </div>
             </div>
           );
-        })}
+        })):(filteredProducts.map((product) => {
+          return (
+            <div onClick={()=>{setPostDetails(product);nav('/overview')}}
+              style={{
+                background: `url(${product.img1}) center/cover`,
+              }}
+              className="relative h-[500px] "
+            >
+              {/* <div>
+                    <img src={product.src} alt="" />
+                </div> */}
+              <div className="flex justify-between absolute bottom-0 w-full p-[6%]  ">
+                <div className="text-left text-[#244262] ">
+                  <h4 className="font-AbrilRegular text-[20px]  ">
+                    {product.name}
+                  </h4>
+                  <p className="font-gorditaRegular">
+                    ${product.offerPrice}/kg
+                  </p>
+                  <p className="grid grid-cols-5 gap-x-2">
+                    {star.map((s, i) => {
+                      return <p>{i < product.rating ? "★" : "☆"}</p>;
+                    })}
+                  </p>
+                </div>
+                <div className="w-[55%]">
+                  <div className="flex justify-end font-AbrilRegular text-[20px] mb-[4%] ">
+                    <h4 className="line-through text-[#244262] ">
+                      ${product.price}
+                    </h4>
+                    <h4 className="ml-[17%] text-[#FFA27E] ">
+                      {" "}
+                      ${product.offerPrice}
+                    </h4>
+                  </div>
+                  <div className="flex justify-between text-white ">
+                    <div className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
+                      <FontAwesomeIcon
+                        icon={faShoppingBag}
+                        className="h-[18px]"
+                      />
+                    </div>
+                    <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
+                      <FontAwesomeIcon icon={faEye} className="h-[18px]" />
+                    </div>
+                    <div className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
+                      <FontAwesomeIcon icon={faHeart} className="h-[18px] " />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })) }
       </div>
       <button className="bg-[#94C4F7] py-[1%] px-[3%] font-gorditaMedium mx-auto text-white">
         LOAD MORE
