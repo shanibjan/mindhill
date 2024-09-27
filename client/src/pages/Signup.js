@@ -5,6 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 const Signup = () => {
+  const [image, setImage] = useState([]);
+  console.log(image);
+  
+  
     const nav=useNavigate()
     const { pathname } = useLocation();
     useEffect(() => {
@@ -19,7 +23,7 @@ const Signup = () => {
 
     const register=async()=>{
         try {
-          const res=await axios.post('/api/v1/auth/register',{name,email,password,phone})
+          const res=await axios.post('/api/v1/auth/register',{name,email,password,phone,profile:image})
             console.log(res.data);
             if(res.data.success){
               window.alert(res.data.message)
@@ -32,6 +36,21 @@ const Signup = () => {
           window.alert(error.response.data.error);
         }
     }
+
+
+    const store = (e) => {
+      let val = e.target.files[0];
+  
+    
+      const reader = new FileReader();
+      reader.readAsDataURL(val);
+     
+      reader.addEventListener("load", () => {
+        let imageLoader = reader.result;
+       
+        setImage(imageLoader);
+      });
+    };
   return (
     <div>
      
@@ -45,6 +64,9 @@ const Signup = () => {
         <h4 className="text-[30px] font-gorditaRegular text-[#244262] my-[4%] ">
           Provide User information here
         </h4>
+        <div>
+          
+        </div>
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
           type="text"
@@ -66,6 +88,19 @@ const Signup = () => {
           value={phone} onChange={(e)=>setPhone(e.target.value)}
         />
         <br />
+        <div className="w-[30%] mx-auto text-left font-gorditaRegular text-gray-400 " >
+
+        <label htmlFor="">Add your Profile</label> 
+        </div><br />
+        <input
+            type="file"
+            id="myFile"
+            name="filename"
+            multiple
+            accept=".jpg,.jpeg,.png"
+            className='px-[.6%] py-[1%] bg-[#EBF5FF]  w-[30%]  mb-[2%] font-gorditaRegular' 
+            onChange={store}
+          /> <br />
         <input
           className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
           type="password"

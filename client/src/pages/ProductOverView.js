@@ -10,39 +10,87 @@ import {
   faLinkedin,
   faPinterest,
 } from "@fortawesome/free-brands-svg-icons";
-import p11 from "../images/product-11.jpg";
-import p111 from "../images/product-11-1.jpg";
-import p112 from "../images/product-11-2.jpg";
-import p113 from "../images/product-11-3.jpg";
+
 import Reviews from "../components/Reviews";
 import Footer from "../components/Footer";
 import { PostContext } from "../store/postContext";
 import { useLocation } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 
 const ProductOverView = () => {
   const [image, setImage] = useState();
   const [qty, setQty] = useState(1);
-  const[review,setReview]=useState([])
-  console.log(review);
-  
+  const [review, setReview] = useState([]);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user ? user._id : null;
+  const [data, setData] = useState([]);
+
   const [bg, setBg] = useState("Description");
-  const stars= ["✩", "✩", "✩", "✩", "✩"]
+  const stars = ["✩", "✩", "✩", "✩", "✩"];
   const { pathname } = useLocation();
-  const{postDetails}=useContext(PostContext)
-  
+  const { postDetails } = useContext(PostContext);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, window.innerHeight / 2);
   }, [pathname]);
 
-  const fetchData=async()=>{
-    const res=await axios.get(`api/v1/product/get-review/${postDetails._id}`)
-    setReview(res.data);
-    
-  }
-  useEffect(()=>{
-    fetchData()
-  },[])
+  const fetchCartData = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+      );
+      setData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(
+        `api/v1/product/get-review/${postDetails._id}`
+      );
+      setReview(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+    fetchCartData();
+  }, []);
+
+  const addtoCart = async () => {
+    try {
+      const item = data.filter((items) => {
+        return items.product === postDetails._id;
+      });
+
+      if (item.length > 0) {
+        const updatedQty = qty + item[0].quantity;
+
+        const res = await axios.put(
+          `api/v1/product/update-cart/${item[0]._id}`,
+          { quantity: updatedQty }
+        );
+        window.alert(res.data.message);
+      } else {
+        const res = await axios.post("api/v1/product/add-cart", {
+          name: postDetails.name,
+          quantity: qty,
+          offerPrice: postDetails.offerPrice,
+          img1: postDetails.img1,
+          userId,
+          productId: postDetails._id,
+        });
+        console.log(res.data);
+        window.alert(res.data.message);
+      }
+      fetchCartData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -50,13 +98,29 @@ const ProductOverView = () => {
       <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-x-16 py-[5%] px-[10%]">
         <div className="grid grid-row-2">
           <div className="h-full">
-            <img className="h-full object-cover" src={image?image:postDetails.img1} alt="" />
+            <img
+              className="h-full object-cover"
+              src={image ? image : postDetails.img1}
+              alt=""
+            />
           </div>
           <div className="flex items-end">
             <div className="grid grid-cols-3 gap-[3%] mt-[3%]">
-              <img onMouseEnter={() => setImage(postDetails.img2)} src={postDetails.img2} alt="" />
-              <img onMouseEnter={() => setImage(postDetails.img3)} src={postDetails.img3} alt="" />
-              <img onMouseEnter={() => setImage(postDetails.img4)} src={postDetails.img4} alt="" />
+              <img
+                onMouseEnter={() => setImage(postDetails.img2)}
+                src={postDetails.img2}
+                alt=""
+              />
+              <img
+                onMouseEnter={() => setImage(postDetails.img3)}
+                src={postDetails.img3}
+                alt=""
+              />
+              <img
+                onMouseEnter={() => setImage(postDetails.img4)}
+                src={postDetails.img4}
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -66,19 +130,18 @@ const ProductOverView = () => {
               {postDetails.name}
             </h1>
             <div className="flex font-gorditaRegular my-[3%] text-[#244262] items-center   ">
-              <div className="mr-[5%] grid grid-cols-5 gap-x-2  text-[23px] " >
-                
-                {stars.map((star,index)=>{
-                  return(
-                    <h4>{index<postDetails.rating?"★":star}</h4>
-                  )
+              <div className="mr-[5%] grid grid-cols-5 gap-x-2  text-[23px] ">
+                {stars.map((star, index) => {
+                  return <h4>{index < postDetails.rating ? "★" : star}</h4>;
                 })}
               </div>
               <h4>({review.length} Customer review)</h4>
             </div>
             <div className="flex justify-start font-AbrilRegular text-[30px] ">
-              <h4 className="line-through text-[#244262] ">$3</h4>
-              <h4 className="ml-[17%] text-[#FFA27E] "> $4</h4>
+              <h4 className=" text-[#FFA27E] "> ${postDetails.offerPrice}</h4>
+              <h4 className="line-through ml-[17%] text-[#244262] ">
+                ${postDetails.price}
+              </h4>
             </div>
             <p className="font-gorditaRegular text-[15px] text-gray-500 my-[5%] ">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. At iure
@@ -113,7 +176,10 @@ const ProductOverView = () => {
                   </div>
                 </div>
               </div>
-              <button className="bg-[#94C4F7] py-[1%] px-[3%] font-gorditaMedium text-white">
+              <button
+                onClick={addtoCart}
+                className="bg-[#94C4F7] py-[1%] px-[3%] font-gorditaMedium text-white"
+              >
                 ADD TO CART
               </button>
             </div>
@@ -124,17 +190,17 @@ const ProductOverView = () => {
               <h4 className="font-gorditaRegular">Add to wishlist</h4>
             </div>
             <div className="leading-[50px] text-[#244262] ">
-              <div className="flex">
+              <div className="flex items-baseline">
                 <h3 className="font-AbrilRegular text-[20px]  mr-[5%]">SKU:</h3>
                 <p className="font-gorditaRegular">05-22</p>
               </div>
-              <div className="flex">
+              <div className="flex items-baseline">
                 <h3 className="font-AbrilRegular text-[20px]  mr-[5%]">
                   Category:
                 </h3>
-                <p className="font-gorditaRegular">Vegtables</p>
+                <p className="font-gorditaRegular">{postDetails.category}</p>
               </div>
-              <div className="flex">
+              <div className="flex items-baseline">
                 <h3 className="font-AbrilRegular text-[20px] mr-[5%]">Tags:</h3>
                 <p className="font-gorditaRegular">Food,Healthy</p>
               </div>
@@ -191,31 +257,39 @@ const ProductOverView = () => {
             <h4>Reviews ({review.length})</h4>
           </div>
         </div>
-        {bg==="Description"?(<div className="py-[3%] px-[15%] font-gorditaRegular text-gray-500">
-          <p>
-            Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-            Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
-            Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur
-            ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas
-            tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit
-            amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel,
-            luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante
-            tincidunt.
-          </p>
-        </div>):bg==="Additional Info"?(<div className="py-[3%] px-[15%] text-[20px]" >
-            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 " >
-                <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]" >Weight</h2>
-                <p className="font-gorditaRegular" > 1 kg </p>
+        {bg === "Description" ? (
+          <div className="py-[3%] px-[15%] font-gorditaRegular text-gray-500">
+            <p>
+              Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+              Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.
+              Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur
+              ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas
+              tempus, tellus eget condimentum rhoncus, sem quam semper libero,
+              sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit
+              vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et
+              ante tincidunt.
+            </p>
+          </div>
+        ) : bg === "Additional Info" ? (
+          <div className="py-[3%] px-[15%] text-[20px]">
+            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 ">
+              <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]">
+                Weight
+              </h2>
+              <p className="font-gorditaRegular"> 1 kg </p>
             </div>
-            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 " >
-                <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]" >Dimensions</h2>
-                <p className="font-gorditaRegular" >10 × 10 × 30 cm</p>
+            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 ">
+              <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]">
+                Dimensions
+              </h2>
+              <p className="font-gorditaRegular">10 × 10 × 30 cm</p>
             </div>
-        </div>):(<Reviews productId={postDetails._id} />)}
-        
-        
+          </div>
+        ) : (
+          <Reviews productId={postDetails._id} name={postDetails.name} />
+        )}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import userimg from "../images/user-img-1.webp";
+import userimg from "../images/user.png";
 import axios from 'axios'
-const Reviews = ({productId}) => {
+const Reviews = (props) => {
+  
+  
   
   const[rating,setRating]=useState()
   const[review,setReview]=useState([])
@@ -12,9 +14,10 @@ const Reviews = ({productId}) => {
   const user = JSON.parse(localStorage.getItem('user'));
   
   
-  
+  const productId=props.productId
   const name=user?user.name:""
  const email=user?user.email:""
+ const profile=user?user.profile:""
   
 
   const fetchData=async()=>{
@@ -30,19 +33,16 @@ const Reviews = ({productId}) => {
   const submit=async()=>{
     try {
       
-      const res=await axios.post('api/v1/product/add-review',{name,email,review:addReview,rating,productId})
+      const res=await axios.post('api/v1/product/add-review',{name,email,review:addReview,rating,productId,profile})
       console.log(res.data);
       if(res.data.success){
         window.alert(res.data.message)
         fetchData()
       }
-      else{
-        console.log("f");
-        
-      }
+      
       
     } catch (error) {
-        window.alert(error.response.data.error);
+        window.alert(error.response.data.message);
         
       
     }
@@ -51,7 +51,7 @@ const Reviews = ({productId}) => {
     <div className="py-[3%] px-[15%]">
       <div className="pb-[3%] border-b-[1px] border-b-gray-300 ">
         <div className="text-[35px] font-AbrilRegular text-left mb-[4%] text-[#244262]">
-          <h2>{review.length} review for Spinach</h2>
+          <h2>{review.length}  review for {props.name}</h2>
         </div>
         <div>
           {review.map((rev)=>{
@@ -59,8 +59,8 @@ const Reviews = ({productId}) => {
             
             return(
               <div className="flex items-center my-[8%]">
-              <div className="mr-[2%] w-[150px]">
-                <img src={userimg} alt="" />
+              <div className="mr-[2%] w-[70px] h-[70px]">
+                <img className="w-full h-full object-cover rounded-[50%]" src={rev.profile?rev.profile:userimg} alt="" />
               </div>
   
               <div className="text-left leading-[30px] font-gorditaRegular text-[#244262] w-[90%]">
@@ -69,10 +69,10 @@ const Reviews = ({productId}) => {
                       return <p>{i < rev.rating ? "★" : s}</p>;
                     })}
                   </div>
-                <h3 className="text-[25px] font-AbrilRegular mb-[2%] ">
+                <h3 className="text-[20px] font-AbrilRegular ">
                   {rev.name}
                 </h3>
-                <h4>{rev.createdAt}.</h4>
+                <h4 className="mb-[2%]" >{rev.createdAt}.</h4>
                 <p className="text-gray-500">
                   {rev.review}
                 </p>

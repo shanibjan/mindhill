@@ -6,7 +6,7 @@ import pIcon4 from "../images/p-icon-4.png";
 import pIcon5 from "../images/p-icon-5.webp";
 import pIcon6 from "../images/p-icon-6.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingBag,faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
 import axios from 'axios'
 import { PostContext } from "../store/postContext";
@@ -15,9 +15,38 @@ import { useNavigate } from "react-router-dom";
 const Products = () => {
   const [bgColor, setBgColor] = useState("Show All");
   const [products,setProducts]=useState([])
+  console.log(products);
+  
   const nav=useNavigate()
+  const[favList,setFavList]=useState([])
+ 
+  
   const{setPostDetails}=useContext(PostContext)
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId=user?user._id:null
+  const fetchFavoriteList=async()=>{
+    try {
+      const res=await axios.get(`api/v1/product/favoritelist/${userId}`)
+      setFavList(res.data);
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
+  useEffect(()=>{
+    fetchFavoriteList()
+  },[])
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   const productIcons = [
     { src: pIcon1, category: "Show All" },
     { src: pIcon2, category: "Butter & Eggs" },
@@ -41,13 +70,47 @@ const Products = () => {
     fetchData()
   },[])
 
+  
   const star= ["☆", "☆", "☆", "☆", "☆"]
 
   const filteredProducts=products.filter((filter)=>{
     return(filter.category===bgColor)
   })
 
-  console.log(filteredProducts);
+  const addtoFav=async(productId)=>{
+
+    try {
+      const res=await axios.post('api/v1/product/add-fav',{userId,productId})
+      console.log(res.data);
+      if(res.data.success){
+       
+        fetchFavoriteList()
+    
+      }
+      
+    } catch (error) {
+      window.alert(error.response.data.message);
+      
+    }
+  }
+
+
+  const removeFav=async(productId)=>{
+
+    try {
+      const res=await axios.post('api/v1/product/remove-fav',{userId,productId})
+      console.log(res.data);
+      if(res.data.success){
+      
+        fetchFavoriteList()
+    
+      }
+      
+    } catch (error) {
+      window.alert(error.response.data.error);
+      
+    }
+  }
   
   
   return (
@@ -90,7 +153,7 @@ const Products = () => {
 
         { bgColor==="Show All" ?(products.map((product) => {
           return (
-            <div onClick={()=>{setPostDetails(product);nav('/overview')}}
+            <div 
               style={{
                 background: `url(${product.img1}) center/cover`,
               }}
@@ -99,6 +162,9 @@ const Products = () => {
               {/* <div>
                     <img src={product.src} alt="" />
                 </div> */}
+                <div onClick={()=>{setPostDetails(product);nav('/overview')}} className="h-[77%]" >
+
+                </div>
               <div className="flex justify-between absolute bottom-0 w-full p-[6%]  ">
                 <div className="text-left text-[#244262] ">
                   <h4 className="font-AbrilRegular text-[20px]  ">
@@ -133,8 +199,9 @@ const Products = () => {
                     <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
                       <FontAwesomeIcon icon={faEye} className="h-[18px]" />
                     </div>
-                    <div className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                      <FontAwesomeIcon icon={faHeart} className="h-[18px] " />
+                    <div  className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center cursor-pointer">
+                      {favList.includes(product._id)?(<FontAwesomeIcon onClick={()=>removeFav(product._id)}  icon={faHeartSolid} className="h-[18px] " />):(<FontAwesomeIcon onClick={()=>addtoFav(product._id)} icon={faHeart} className="h-[18px] " />)}
+                      
                     </div>
                   </div>
                 </div>
@@ -143,7 +210,7 @@ const Products = () => {
           );
         })):(filteredProducts.map((product) => {
           return (
-            <div onClick={()=>{setPostDetails(product);nav('/overview')}}
+            <div 
               style={{
                 background: `url(${product.img1}) center/cover`,
               }}
@@ -152,6 +219,8 @@ const Products = () => {
               {/* <div>
                     <img src={product.src} alt="" />
                 </div> */}
+                <div onClick={()=>{setPostDetails(product);nav('/overview')}} className="h-[77%]" >
+                </div>
               <div className="flex justify-between absolute bottom-0 w-full p-[6%]  ">
                 <div className="text-left text-[#244262] ">
                   <h4 className="font-AbrilRegular text-[20px]  ">
@@ -186,8 +255,9 @@ const Products = () => {
                     <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
                       <FontAwesomeIcon icon={faEye} className="h-[18px]" />
                     </div>
-                    <div className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                      <FontAwesomeIcon icon={faHeart} className="h-[18px] " />
+                    <div  className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center cursor-pointer">
+                      {favList.includes(product._id)?(<FontAwesomeIcon onClick={()=>removeFav(product._id)}  icon={faHeartSolid} className="h-[18px] " />):(<FontAwesomeIcon onClick={()=>addtoFav(product._id)} icon={faHeart} className="h-[18px] " />)}
+                      
                     </div>
                   </div>
                 </div>

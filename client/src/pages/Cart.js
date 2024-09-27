@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartHeader from "../components/CartHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import p11 from "../images/product-11.jpg";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 const Cart = () => {
     const[radio,setRadio]=useState()
+    const[data,setData]=useState([])
+    console.log(data);
+    
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user ? user._id : null;
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:7000/api/v1/product/get-cart/${userId}`);
+        setData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
+
     
     
   return (
@@ -31,8 +49,9 @@ const Cart = () => {
               <h1>Subtotal</h1>
             </div>
           </div>
-
-          <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
+          {data.map((items)=>{
+            return(
+              <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
             <div className="w-[5%]">
               <div className=" cursor-pointer h-[100px] flex justify-center items-center">
                 <FontAwesomeIcon
@@ -42,18 +61,18 @@ const Cart = () => {
               </div>
             </div>
             <div className="w-[10%] p-[1%]">
-              <img src={p11} alt="" />
+              <img src={items.img1} alt="" />
             </div>
             <div className="w-[25%]">
-              <h1>Spinach</h1>
+              <h1>{items.name}</h1>
             </div>
             <div className="w-[20%]">
-              <h1>$3</h1>
+              <h1>${items.offerPrice}</h1>
             </div>
             <div className="w-[20%]">
               <div className="flex items-center h-[54px] ">
                 <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
-                  <h3>1</h3>
+                  <h3>{items.quantity}</h3>
                 </div>
                 <div className="grid grid-rows-2 gap-y-[3%] h-full">
                   <div className="bg-[#94C4F7] w-[27px]  flex justify-center items-center">
@@ -73,9 +92,12 @@ const Cart = () => {
               </div>
             </div>
             <div className="w-[20%]">
-              <h1>$3</h1>
+              <h1>${items.offerPrice}</h1>
             </div>
           </div>
+            )
+          })}
+          
         </div>
 
         <div className="flex justify-between my-[5%]">

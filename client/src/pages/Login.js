@@ -25,11 +25,11 @@ const Login = () => {
             window.alert(res.data.message)
             nav('/')
         }else{
-            window.alert(res.data.message)
+            console.log(res.data.message)
         }
         
       } catch (error) {
-        window.alert(error.response.data.error);
+        window.alert(error.response.data.message);
       }
   }
   return (

@@ -1,29 +1,25 @@
 import mongoose from "mongoose";
 
-const reviewSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   name:{
     type:String,
     require:true,
     trim:true,
   },
-  email:{
+  img1:{
     type:String,
     require:true,
-    
+   
   },
-  profile:{
-    type:String,
-    require:true,
-    
-  },
-  review:{
-    type:String,
-    require:true,
-  },
-  rating:{
+  offerPrice:{
     type:Number,
     require:true,
   },
+  quantity:{
+    type:Number,
+    require:true,
+  },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },
  
  
@@ -34,4 +30,4 @@ const reviewSchema = new mongoose.Schema({
 
 
 
-export default mongoose.model('reviews',reviewSchema)
+export default mongoose.model('carts',cartSchema)

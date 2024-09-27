@@ -1,123 +1,112 @@
-import express from 'express'
+import express from "express";
 import { hashPassword, comparePassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
-import JWT from 'jsonwebtoken';
+import JWT from "jsonwebtoken";
 
+const router = express.Router();
 
-const router = express.Router()
+router.post("/register", async (req, res) => {
+  try {
+    const { name, email, password, phone, profile, product } = req.body;
 
-router.post('/register',async(req,res)=>{
+    // Validation
+    if (!name || !email || !password || !phone || !profile) {
+      return res.status(400).send({ error: "All fields are required" });
+    }
 
-    try {
-        const { name, email, password, phone,} = req.body;
+    // Check user
+    const existingUser = await userModel.findOne({ email });
 
-        // Validation
-        if (!name || !email || !password || !phone  ) {
-          return res.status(400).send({ error: 'All fields are required' });
-        }
-    
-        // Check user
-        const existingUser = await userModel.findOne({ email });
-    
-        // Existing user
-        if (existingUser) {
-          return res.status(200).send({
-            success: false,
-            message: 'Already registered, please login',
-          });
-        }
-    
-        
-    
-        // Register user
-        const hashedPassword = await hashPassword(password);
-       
-    
-        // Save user
-        const user = await new userModel({ name, email, phone, password: hashedPassword}).save();
-    
-        res.status(201).send({
-          success: true,
-          message: 'User registered successfully',
-          user,
-          JWT,
-        });
-    } catch (error) {
-        console.log(error);
+    // Existing user
+    if (existingUser) {
+      return res.status(200).send({
+        success: false,
+        message: "Already registered, please login",
+      });
+    }
+
+    // Register user
+    const hashedPassword = await hashPassword(password);
+
+    // Save user
+    const user = await new userModel({
+      name,
+      email,
+      phone,
+      profile,
+      product,
+      password: hashedPassword,
+    }).save();
+
+    res.status(201).send({
+      success: true,
+      message: "User registered successfully",
+      user,
+      JWT,
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).send({
       success: false,
-      message: 'Error in registration',
+      message: "Error in registration",
       error,
     });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+      return res.status(400).send({ message: "All fields are required" });
     }
-})
 
-router.post('/login',async(req,res)=>{
-    try {
-        const { email, password } = req.body;
-    
-        // Validation
-        if (!email || !password) {
-          
-          return res.status(400).send({ error: 'All fields are required' });
-        }
-    
-        // Check user
-        const user = await userModel.findOne({ email });
-    
-        if (!user) {
-          return res.status(404).send({
-            success: false,
-            message: "Email not registered",
-          });
-        }
-    
-        const match = await comparePassword(password,user.password);
-        if (!match) {
-          return res.status(401).send({
-            success: false,
-            message: 'Invalid credentials',
-          });
-        }
-    
-        // Generate token
-        const token = await JWT.sign({ _id:user._id }, process.env.JWT_SECRET, {
-          expiresIn: '7d',
-        });
-    
-        res.status(200).send({
-          success: true,
-          message: 'Login successful',
-          token,
-          user:{
-            _id:user._id,
-            name:user.name,
-            email:user.email,
-            phone:user.phone,
-           
-          },
-        });
-    
-      } catch (error) {
-        console.log(error);
-        res.status(500).send({
-          success: false,
-          message: "Error in login",
-          error,
-        });
-      }
-})
+    // Check user
+    const user = await userModel.findOne({ email });
 
+    if (!user) {
+     return res.status(404).send({
+        success: false,
+        message: "Email not registered",
+      });
+    }
 
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.status(401).send({
+        success: false,
+        message: "Invalid password",
+      });
+    }
 
+    // Generate token
+    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
-
-
-
-
-
-
-
-
+    res.status(200).send({
+      success: true,
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        profile: user.profile,
+        favorites:user.product
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in login",
+      error,
+    });
+  }
+});
 
 export default router;
