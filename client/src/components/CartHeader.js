@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import cart from "../images/cart.jpg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const CartHeader = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user ? user._id : null;
+const[wishlist,setWishList]=useState([])
+const fetchWishList = async () => {
+  try {
+    const res = await axios.get(`http://localhost:7000/api/v1/product/favorite/${userId}`);
+    setWishList(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+useEffect(()=>{
+    fetchWishList()
+  },[])
   const nav = useNavigate();
   return (
     <div>
@@ -23,15 +37,11 @@ const CartHeader = () => {
                 <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
                   <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
                 </div>
-                <div onClick={() => nav("/wishlist")} className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
+                <div onClick={() => {user?nav("/wishlist"):window.alert("Please Login")}} className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative">
                   <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
+                  <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]" >{user?wishlist.length:"0"}</h1>
                 </div>
-                <div onClick={() => nav("/cart")} className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
-                  <FontAwesomeIcon
-                    icon={faShoppingBasket}
-                    className="h-[23px]"
-                  />
-                </div>
+                
                 <div className="dropdown">
                   {user ? (
                     <div className="rounded-[50%] w-[50px] h-[50px]">

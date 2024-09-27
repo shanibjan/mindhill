@@ -215,6 +215,7 @@ router.get("/get-cart/:id", async (req, res) => {
 
 router.put("/update-cart/:id", async (req, res) => {
   try {
+   
     
 
     const item = await cartModel.findByIdAndUpdate(req.params.id, req.body, {
