@@ -11,6 +11,8 @@ const Cart = () => {
   const [data, setData] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
+  
+  
   const userId = user ? user._id : null;
   const fetchData = async () => {
     try {
@@ -45,6 +47,48 @@ const Cart = () => {
     } catch (error) {}
   };
 
+  const deleteCart=async(cartId)=>{
+    try {
+      await axios.delete(`api/v1/product/delete-cart/${cartId}`)
+      fetchData()
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+
+  const checkOut=async()=>{
+    const { data: order } = await axios.post('api/v1/payment/create-order', {
+      amount: total*100, // e.g., 50000 paise = ₹500
+    });
+    const options = {
+      key: 'rzp_test_VYT3qiUFj68Unw',
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Mind Hill',
+      description: 'Test Transaction',
+      order_id: order.id,
+      handler: function (response) {
+        // Handle successful payment here
+        console.log(response);
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+        contact: user.phone,
+      },
+      notes: {
+        address: 'Customer Address',
+      },
+      theme: {
+        color: '#F37254',
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  };
   return (
     <div>
       <CartHeader />
@@ -72,7 +116,7 @@ const Cart = () => {
             return (
               <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
                 <div className="w-[5%]">
-                  <div className=" cursor-pointer h-[100px] flex justify-center items-center">
+                  <div onClick={()=>deleteCart(items._id)} className=" cursor-pointer h-[100px] flex justify-center items-center">
                     <FontAwesomeIcon
                       icon={faTimesCircle}
                       className="h-[28%] text-[#244262] "
@@ -197,7 +241,7 @@ const Cart = () => {
               ${total}
             </h5>
           </div>
-          <button className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
+          <button onClick={checkOut} className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
             PROCEED TO CHECKOUT
           </button>
         </div>

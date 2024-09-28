@@ -32,6 +32,15 @@ router.post("/add-product", async (req, res) => {
     ) {
       return res.status(400).send({ error: "All fields are required" });
     }
+    const existingProduct = await productModel.findOne({
+      img1,
+      img2,
+      img3,
+      img4,
+    });
+    if (existingProduct) {
+      return res.status(400).json({ message: "Product images already added" });
+    }
     const products = await new productModel({
       img1,
       img2,
@@ -184,7 +193,6 @@ router.post("/add-cart", async (req, res) => {
       quantity,
       product: productId,
     });
-    console.log(cart);
 
     const item = await cart.save();
     res.status(201).send({
@@ -215,17 +223,25 @@ router.get("/get-cart/:id", async (req, res) => {
 
 router.put("/update-cart/:id", async (req, res) => {
   try {
-   
-    
-
     const item = await cartModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
 
-    res.json({ success: true, message: "Cart Updated", item });
+    res.json({ success: true, message: "Already in cart,quantity Updated", item });
   } catch (err) {
     console.log(err);
 
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/delete-cart/:id', async (req, res) => {
+  try {
+    
+    
+    await cartModel.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Cart deleted' });
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });

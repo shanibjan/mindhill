@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import cors from 'cors';
 import authRoutes from './routes/authRoute.js'
 import productRoute from './routes/productRoute.js'
+import paymentRoute from './routes/paymentRoute.js'
 
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json({ limit: '10mb' }));
 
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
+app.use('/api/v1/payment',paymentRoute);
 
 
 
