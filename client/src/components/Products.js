@@ -182,11 +182,11 @@ const Products = () => {
                 <div className="w-[55%]">
                   <div className="flex justify-end font-AbrilRegular text-[20px] mb-[4%] ">
                     <h4 className="line-through text-[#244262] ">
-                      ${product.price}
+                      ₹{product.price}
                     </h4>
                     <h4 className="ml-[17%] text-[#FFA27E] ">
                       {" "}
-                      ${product.offerPrice}
+                      ₹{product.offerPrice}
                     </h4>
                   </div>
                   <div className="flex justify-between text-white ">

@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     
 
     // Check user
-    const existingUser = await userModel.findOne({ email });
+    const existingUser = await userModel.findOne({ email ,phone});
 
     // Existing user
     if (existingUser) {

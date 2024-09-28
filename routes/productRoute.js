@@ -4,6 +4,7 @@ import reviewModel from "../models/reviewModel.js";
 import userModel from "../models/userModel.js";
 import { MongoUnexpectedServerResponseError } from "mongodb";
 import cartModel from "../models/cartModel.js";
+import orderModel from "../models/orderModel.js";
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -243,6 +244,37 @@ router.delete('/delete-cart/:id', async (req, res) => {
     res.json({ message: 'Cart deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+router.post('/create-order',async(req,res)=>{
+  try {
+    const {userId,productId,address}=req.body
+
+    const order=await new orderModel({user:userId,product:productId,address}).save()
+    res.status(201).send({
+      success: true,
+      message: "order Added successfully",
+      order: order,
+    });
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
+
+router.get("/get-order/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await orderModel.find({user:userId}).populate('product')
+    console.log(user);
+    
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
   }
 });
 export default router;

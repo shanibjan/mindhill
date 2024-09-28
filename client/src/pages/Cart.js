@@ -8,6 +8,8 @@ import axios from "axios";
 
 const Cart = () => {
   const [radio, setRadio] = useState();
+  console.log(radio);
+  
   const [data, setData] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -59,7 +61,7 @@ const Cart = () => {
 
 
   const checkOut=async()=>{
-    const { data: order } = await axios.post('api/v1/payment/create-order', {
+    const { data: order } = await axios.post('api/v1/payment/create-payment', {
       amount: total*100, // e.g., 50000 paise = ₹500
     });
     const options = {
@@ -130,7 +132,7 @@ const Cart = () => {
                   <h1>{items.name}</h1>
                 </div>
                 <div className="w-[20%]">
-                  <h1>${items.offerPrice}</h1>
+                  <h1>₹{items.offerPrice}</h1>
                 </div>
                 <div className="w-[20%]">
                   <div className="flex items-center h-[54px] ">
@@ -165,7 +167,7 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="w-[20%]">
-                  <h1>${price}</h1>
+                  <h1>₹{price}</h1>
                 </div>
               </div>
             );
@@ -209,7 +211,7 @@ const Cart = () => {
               Subtotal
             </h4>
             <h5 className="w-[70%] font-gorditaRegular text-[18px]">
-              ${total}
+            ₹{total}
             </h5>
           </div>
           <div className="flex text-left items-center border-b-[1px] border-b-gray-200 py-[2%] ">
@@ -235,10 +237,18 @@ const Cart = () => {
           </div>
           <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] ">
             <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
+              Delivery charge
+            </h4>
+            <h5 className="w-[70%] font-gorditaRegular text-[18px]">
+            ₹50
+            </h5>
+          </div>
+          <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] ">
+            <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
               Total
             </h4>
             <h5 className="w-[70%] font-gorditaRegular text-[18px]">
-              ${total}
+            ₹{total+50}
             </h5>
           </div>
           <button onClick={checkOut} className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white">

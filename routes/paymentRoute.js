@@ -8,7 +8,7 @@ const razorpay = new Razorpay({
     key_secret: 'UUu8gOXV8YOdqIS2gYtQCTOv',
   });
 
-  router.post('/create-order', async (req, res) => {
+  router.post('/create-payment', async (req, res) => {
     const options = {
       amount: req.body.amount, // amount in smallest currency unit
       currency: 'INR',

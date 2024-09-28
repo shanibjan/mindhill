@@ -79,7 +79,7 @@ const{setPostDetails}=useContext(PostContext)
                 <h1>{items.name}</h1>
               </div>
               <div className="w-[20%]">
-                <h1>${items.offerPrice}</h1>
+                <h1>₹{items.offerPrice}</h1>
               </div>
               <div className="w-[20%]">
                 <h4>In stock</h4>

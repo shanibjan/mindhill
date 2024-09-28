@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProductHeader from "../components/ProductHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp, faAngleDown,faHeart as faHeartSolid  } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import {
   faFacebook,
@@ -24,6 +24,8 @@ const ProductOverView = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
   const [data, setData] = useState([]);
+  const[favList,setFavList]=useState([])
+  console.log(favList);
   
 
   const [bg, setBg] = useState("Description");
@@ -34,6 +36,19 @@ const ProductOverView = () => {
   useEffect(() => {
     window.scrollTo(0, window.innerHeight / 2);
   }, [pathname]);
+
+  const fetchFavoriteList=async()=>{
+    try {
+      const res=await axios.get(`api/v1/product/favoritelist/${userId}`)
+      setFavList(res.data);
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+ 
 
   const fetchCartData = async () => {
     try {
@@ -59,6 +74,7 @@ const ProductOverView = () => {
   useEffect(() => {
     fetchData();
     fetchCartData();
+    fetchFavoriteList()
   }, []);
 
   const addtoCart = async () => {
@@ -92,6 +108,41 @@ const ProductOverView = () => {
       console.log(error);
     }
   };
+
+  const addtoFav=async(productId)=>{
+
+    try {
+      const res=await axios.post('api/v1/product/add-fav',{userId,productId})
+      console.log(res.data);
+      if(res.data.success){
+       
+        fetchFavoriteList()
+    
+      }
+      
+    } catch (error) {
+      window.alert(error.response.data.message);
+      
+    }
+  }
+
+
+  const removeFav=async(productId)=>{
+
+    try {
+      const res=await axios.post('api/v1/product/remove-fav',{userId,productId})
+      console.log(res.data);
+      if(res.data.success){
+      
+        fetchFavoriteList()
+    
+      }
+      
+    } catch (error) {
+      window.alert(error.response.data.error);
+      
+    }
+  }
 
   return (
     <div>
@@ -139,9 +190,9 @@ const ProductOverView = () => {
               <h4>({review.length} Customer review)</h4>
             </div>
             <div className="flex justify-start font-AbrilRegular text-[30px] ">
-              <h4 className=" text-[#FFA27E] "> ${postDetails.offerPrice}</h4>
+              <h4 className=" text-[#FFA27E] "> ₹{postDetails.offerPrice}</h4>
               <h4 className="line-through ml-[17%] text-[#244262] ">
-                ${postDetails.price}
+                ₹{postDetails.price}
               </h4>
             </div>
             <p className="font-gorditaRegular text-[15px] text-gray-500 my-[5%] ">
@@ -185,10 +236,11 @@ const ProductOverView = () => {
               </button>
             </div>
             <div className="flex items-center my-[5%] ">
-              <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white mr-8">
-                <FontAwesomeIcon icon={faHeart} className="h-[18px] " />
-              </div>
-              <h4 className="font-gorditaRegular">Add to wishlist</h4>
+            <div  className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center cursor-pointer mr-[4%] text-white">
+                      {favList.includes(postDetails._id)?(<FontAwesomeIcon onClick={()=>removeFav(postDetails._id)}  icon={faHeartSolid} className="h-[18px] " />):(<FontAwesomeIcon onClick={()=>addtoFav(postDetails._id)} icon={faHeart} className="h-[18px] " />)}
+                      
+                    </div>
+              <h4 className="font-gorditaRegular">{favList.includes(postDetails._id)?"Remove from Wishlist":"Add to Wishlist"}</h4>
             </div>
             <div className="leading-[50px] text-[#244262] ">
               <div className="flex items-baseline">
