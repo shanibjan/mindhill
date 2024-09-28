@@ -251,9 +251,9 @@ router.delete('/delete-cart/:id', async (req, res) => {
 
 router.post('/create-order',async(req,res)=>{
   try {
-    const {userId,productId,address}=req.body
+    const {userId,cartId,address,bill}=req.body
 
-    const order=await new orderModel({user:userId,product:productId,address}).save()
+    const order=await new orderModel({user:userId,product:cartId,address,bill}).save()
     res.status(201).send({
       success: true,
       message: "order Added successfully",

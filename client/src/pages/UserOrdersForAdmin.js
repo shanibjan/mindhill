@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import p11 from "../images/product-11.jpg";
+import axios from "axios";
 
 const UserOrdersForAdmin = () => {
+
+  const [order,setOrder]=useState([])
+const userId="66f56b9d6cc923adf7dc1357"
+  const fetchorder=async()=>{
+      const res=await axios.get(`api/v1/product/get-order/${userId}`)
+      setOrder(res.data);
+      
+  }
+
+  useEffect(()=>{
+    fetchorder()
+  },[])
   return (
     <div className="px-[3%]">
       <div>
@@ -21,60 +34,52 @@ const UserOrdersForAdmin = () => {
                 <h1>Quantity</h1>
               </div>
               <div className="w-[20%]">
-                <h1>Subtotal</h1>
+                <h1>Order status</h1>
               </div>
             </div>
+           {order.map((items,index)=>{
+            return(
+              <div className=" border-[1px] border-gray-300 shadow-lg mb-[4%]">
+              <h1 className="text-left font-AbrilRegular text-[#244262] text-[30px] p-[2%]" >Order No:{index+1}</h1>
 
-            <div className=" border-[1px] border-gray-300 shadow-lg mb-[4%]">
-              <h1 className="text-left font-AbrilRegular text-[#244262] text-[30px] p-[2%]" >Order No:1</h1>
-              <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
+              {items.product.map((item)=>{
+                return(
+                  <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
                 <div className="w-[5%]"></div>
                 <div className="w-[10%] p-[1%]">
-                  <img src={p11} alt="" />
+                  <img src={item.img1} alt="" />
                 </div>
                 <div className="w-[25%]">
-                  <h1>Spinach</h1>
+                  <h1>{item.name}</h1>
                 </div>
                 <div className="w-[20%]">
-                  <h1>$3</h1>
+                  <h1>₹{item.offerPrice*item.quantity}</h1>
                 </div>
                 <div className="w-[20%]">
                   <div className="flex items-center h-[54px] ">
                     <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
-                      <h3>1</h3>
+                      <h3>{item.quantity}</h3>
                     </div>
                   </div>
                 </div>
                 <div className="w-[20%]">
-                  <h1>$3</h1>
+                  <h1>Shipped</h1>
                 </div>
               </div>
+                )
+              })}
+              
 
-              <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
-                <div className="w-[5%]"></div>
-                <div className="w-[10%] p-[1%]">
-                  <img src={p11} alt="" />
-                </div>
-                <div className="w-[25%]">
-                  <h1>Spinach</h1>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-                <div className="w-[20%]">
-                  <div className="flex items-center h-[54px] ">
-                    <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
-                      <h3>1</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-              </div>
+              
 
               <div className="flex justify-evenly font-gorditaMedium mt-[5%] ">
-                <h2>Status:Order Placed</h2>
+                <div className="w-[30%] text-left" >
+                  <h2>Delivery Address:</h2>
+                  <div className="font-gorditaRegular" >
+                    <p>{items.address}</p>
+                  </div>
+                </div>
+                <h2>Status:{items.status}</h2>
                 <div>
                   <div className="flex">
                     <h2>Change Status</h2>
@@ -89,76 +94,17 @@ const UserOrdersForAdmin = () => {
                     UPDATE STATUS
                   </button>
                 </div>
-              </div>
-            </div>
-
-
-            <div className=" border-[1px] border-gray-300 shadow-lg">
-              <h1 className="text-left font-AbrilRegular text-[#244262] text-[30px] p-[2%]" >Order No:1</h1>
-              <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
-                <div className="w-[5%]"></div>
-                <div className="w-[10%] p-[1%]">
-                  <img src={p11} alt="" />
-                </div>
-                <div className="w-[25%]">
-                  <h1>Spinach</h1>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-                <div className="w-[20%]">
-                  <div className="flex items-center h-[54px] ">
-                    <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
-                      <h3>1</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
-                <div className="w-[5%]"></div>
-                <div className="w-[10%] p-[1%]">
-                  <img src={p11} alt="" />
-                </div>
-                <div className="w-[25%]">
-                  <h1>Spinach</h1>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-                <div className="w-[20%]">
-                  <div className="flex items-center h-[54px] ">
-                    <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
-                      <h3>1</h3>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[20%]">
-                  <h1>$3</h1>
-                </div>
-              </div>
-
-              <div className="flex justify-evenly font-gorditaMedium mt-[5%] ">
-                <h2>Status:Order Placed</h2>
                 <div>
-                  <div className="flex">
-                    <h2>Change Status</h2>
-                    <select className="bg-[#EBF5FF]" name="" id="">
-                      <option value=""></option>
-                      <option value="">Order Placed</option>
-                      <option value="">Shipped</option>
-                      <option value="">Delivered</option>
-                    </select>
-                  </div>
-                  <button className="bg-[#94C4F7] py-[3%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] m-[10%]  text-white ">
-                    UPDATE STATUS
-                  </button>
+                  <h2>Total bill: ₹{items.bill} /-</h2>
                 </div>
               </div>
             </div>
+            )
+           })}
+            
+
+
+            
           </div>
         </div>
       </div>
