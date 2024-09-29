@@ -252,7 +252,11 @@ router.delete('/delete-cart/:id', async (req, res) => {
 router.post('/create-order',async(req,res)=>{
   try {
     const {userId,cartId,address,bill}=req.body
-
+    console.log(address);
+    
+    if(!address){
+      return res.status(400).send({ message: "Fill Address" });
+    }
     const order=await new orderModel({user:userId,product:cartId,address,bill}).save()
     res.status(201).send({
       success: true,

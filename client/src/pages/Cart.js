@@ -8,13 +8,12 @@ import axios from "axios";
 
 const Cart = () => {
   const [radio, setRadio] = useState();
-  console.log(radio);
-  
+  const [address, setAddress] = useState();
+
   const [data, setData] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  
-  
+
   const userId = user ? user._id : null;
   const fetchData = async () => {
     try {
@@ -49,48 +48,100 @@ const Cart = () => {
     } catch (error) {}
   };
 
-  const deleteCart=async(cartId)=>{
+  const deleteCart = async (cartId) => {
     try {
-      await axios.delete(`api/v1/product/delete-cart/${cartId}`)
-      fetchData()
+      await axios.delete(`api/v1/product/delete-cart/${cartId}`);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // 5559 4265 3785 2759
+  let paymentId = "";
+  const checkOut = async () => {
+    try {
+      console.log(paymentId);
+
+      if (radio === "COD") {
+        confirmOrder();
+      } else if (radio === "ONLINE") {
+        if (!address) {
+          window.alert("Fill address");
+        } else {
+          const { data: order } = await axios.post(
+            "api/v1/payment/create-payment",
+            {
+              amount: (total + 50) * 100, // e.g., 50000 paise = ₹500
+            }
+          );
+          const options = {
+            key: "rzp_test_VYT3qiUFj68Unw",
+            amount: order.amount,
+            currency: order.currency,
+            name: "Mind Hill",
+            description: "Test Transaction",
+            order_id: order.id,
+            handler: function (response) {
+              paymentId = response;
+              setTimeout(() => {
+                confirmOrder();
+              }, 1000);
+            },
+            prefill: {
+              name: user.name,
+              email: user.email,
+              contact: user.phone,
+            },
+            notes: {
+              address: "Customer Address",
+            },
+            theme: {
+              color: "#94C4F7",
+            },
+          };
+
+          const razorpay = new window.Razorpay(options);
+          razorpay.open();
+        }
+      } else {
+        window.alert("Select any payment");
+      }
     } catch (error) {
       console.log(error);
       
+      window.alert(error.response.data.message);
     }
-  }
-
-
-  const checkOut=async()=>{
-    const { data: order } = await axios.post('api/v1/payment/create-payment', {
-      amount: total*100, // e.g., 50000 paise = ₹500
-    });
-    const options = {
-      key: 'rzp_test_VYT3qiUFj68Unw',
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Mind Hill',
-      description: 'Test Transaction',
-      order_id: order.id,
-      handler: function (response) {
-        // Handle successful payment here
-        console.log(response);
-      },
-      prefill: {
-        name: user.name,
-        email: user.email,
-        contact: user.phone,
-      },
-      notes: {
-        address: 'Customer Address',
-      },
-      theme: {
-        color: '#F37254',
-      },
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
   };
+
+  const confirmOrder = async () => {
+    try {
+      console.log(paymentId);
+
+    if (paymentId || radio === "COD") {
+      const res = await axios.post("api/v1/product/create-order", {
+        userId,
+        address,
+        bill: total + 50,
+        cartId,
+      });
+      console.log(res.data);
+
+      if (res.data.success) {
+        window.alert(res.data.message);
+      }
+    }
+    } catch (error) {
+     window.alert(error.response.data.message);
+      
+    }
+    
+  };
+
+  useEffect(() => {
+    confirmOrder();
+  }, []);
+
+  let cartId = [];
   return (
     <div>
       <CartHeader />
@@ -114,11 +165,15 @@ const Cart = () => {
           </div>
           {data.map((items) => {
             const price = items.offerPrice * items.quantity;
+            cartId.push(items._id);
 
             return (
               <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
                 <div className="w-[5%]">
-                  <div onClick={()=>deleteCart(items._id)} className=" cursor-pointer h-[100px] flex justify-center items-center">
+                  <div
+                    onClick={() => deleteCart(items._id)}
+                    className=" cursor-pointer h-[100px] flex justify-center items-center"
+                  >
                     <FontAwesomeIcon
                       icon={faTimesCircle}
                       className="h-[28%] text-[#244262] "
@@ -199,6 +254,8 @@ const Cart = () => {
             name=""
             id=""
             placeholder="Delivery Address here"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           ></textarea>
         </div>
 
@@ -211,7 +268,7 @@ const Cart = () => {
               Subtotal
             </h4>
             <h5 className="w-[70%] font-gorditaRegular text-[18px]">
-            ₹{total}
+              ₹{total}
             </h5>
           </div>
           <div className="flex text-left items-center border-b-[1px] border-b-gray-200 py-[2%] ">
@@ -239,19 +296,20 @@ const Cart = () => {
             <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
               Delivery charge
             </h4>
-            <h5 className="w-[70%] font-gorditaRegular text-[18px]">
-            ₹50
-            </h5>
+            <h5 className="w-[70%] font-gorditaRegular text-[18px]">₹50</h5>
           </div>
           <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] ">
             <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
               Total
             </h4>
             <h5 className="w-[70%] font-gorditaRegular text-[18px]">
-            ₹{total+50}
+              ₹{total + 50}
             </h5>
           </div>
-          <button onClick={checkOut} className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
+          <button
+            onClick={checkOut}
+            className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white"
+          >
             PROCEED TO CHECKOUT
           </button>
         </div>
