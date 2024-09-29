@@ -148,8 +148,8 @@ const Header = () => {
                     >
                       {user ? "Logout" : "Login"}
                     </li>
-                    <li>{user ? "" : "Register"}</li>
-                    <li>Admin</li>
+                    <li onClick={()=>nav('/signup')} >{user ? "" : "Register"}</li>
+                    <li onClick={()=>nav('/admin')} >Admin</li>
                     <li>{user ? "My orders" : ""}</li>
                   </ul>
                 </div>

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import p11 from "../images/product-11.jpg";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const UserOrdersForAdmin = () => {
 
   const [order,setOrder]=useState([])
-const userId="66f56b9d6cc923adf7dc1357"
+  console.log(order);
+  const location=useLocation()
+  
+  
+  
+const userId=location.state.userId
   const fetchorder=async()=>{
       const res=await axios.get(`api/v1/product/get-order/${userId}`)
       setOrder(res.data);
+      
+     
       
   }
 
@@ -38,11 +46,15 @@ const userId="66f56b9d6cc923adf7dc1357"
               </div>
             </div>
            {order.map((items,index)=>{
+            console.log(items);
+            
             return(
               <div className=" border-[1px] border-gray-300 shadow-lg mb-[4%]">
               <h1 className="text-left font-AbrilRegular text-[#244262] text-[30px] p-[2%]" >Order No:{index+1}</h1>
 
               {items.product.map((item)=>{
+              
+                
                 return(
                   <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
                 <div className="w-[5%]"></div>
@@ -63,7 +75,7 @@ const userId="66f56b9d6cc923adf7dc1357"
                   </div>
                 </div>
                 <div className="w-[20%]">
-                  <h1>Shipped</h1>
+                  <h1>{items.status}</h1>
                 </div>
               </div>
                 )

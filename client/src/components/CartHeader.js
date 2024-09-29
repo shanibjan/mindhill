@@ -8,18 +8,20 @@ import axios from "axios";
 const CartHeader = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
-const[wishlist,setWishList]=useState([])
-const fetchWishList = async () => {
-  try {
-    const res = await axios.get(`http://localhost:7000/api/v1/product/favorite/${userId}`);
-    setWishList(res.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-useEffect(()=>{
-    fetchWishList()
-  },[])
+  const [wishlist, setWishList] = useState([]);
+  const fetchWishList = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:7000/api/v1/product/favorite/${userId}`
+      );
+      setWishList(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchWishList();
+  }, []);
   const nav = useNavigate();
   return (
     <div>
@@ -30,50 +32,59 @@ useEffect(()=>{
         }}
       >
         <div className="flex justify-between text-white items-center">
-              <div onClick={() => nav("/")}>
-                <h2 className="font-AbrilRegular text-[40px] cursor-pointer">MIND HILL</h2>
-              </div>
-              <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium cursor-pointer">
-                <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
-                  <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
-                </div>
-                <div onClick={() => {user?nav("/wishlist"):window.alert("Please Login")}} className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative">
-                  <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
-                  <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]" >{user?wishlist.length:"0"}</h1>
-                </div>
-                
-                <div className="dropdown">
-                  {user ? (
-                    <div className="rounded-[50%] w-[50px] h-[50px]">
-                      <img
-                        className="h-full w-full object-cover rounded-[50%]"
-                        src={user.profile}
-                        alt=""
-                      />
-                    </div>
-                  ) : (
-                    <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
-                      <FontAwesomeIcon icon={faUser} className="h-[23px]" />
-                    </div>
-                  )}
-
-                  <ul className="dropdown-menu text-[#244262] leading-[35px] ">
-                    <li
-                      onClick={() => {
-                        localStorage.removeItem("user");
-                        localStorage.removeItem("token");
-                        nav("/login");
-                      }}
-                    >
-                      {user ? "Logout" : "Login"}
-                    </li>
-                    <li>{user ? "" : "Register"}</li>
-                    <li>Admin</li>
-                    <li>{user ? "My orders" : ""}</li>
-                  </ul>
-                </div>
-              </div>
+          <div onClick={() => nav("/")}>
+            <h2 className="font-AbrilRegular text-[40px] cursor-pointer">
+              MIND HILL
+            </h2>
+          </div>
+          <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium cursor-pointer">
+            <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center">
+              <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
             </div>
+            <div
+              onClick={() => {
+                user ? nav("/wishlist") : window.alert("Please Login");
+              }}
+              className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+            >
+              <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
+              <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
+                {user ? wishlist.length : "0"}
+              </h1>
+            </div>
+
+            <div className="dropdown">
+              {user ? (
+                <div className="rounded-[50%] w-[50px] h-[50px]">
+                  <img
+                    className="h-full w-full object-cover rounded-[50%]"
+                    src={user.profile}
+                    alt=""
+                  />
+                </div>
+              ) : (
+                <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
+                  <FontAwesomeIcon icon={faUser} className="h-[23px]" />
+                </div>
+              )}
+
+              <ul className="dropdown-menu text-[#244262] leading-[35px] ">
+                <li
+                  onClick={() => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("token");
+                    nav("/login");
+                  }}
+                >
+                  {user ? "Logout" : "Login"}
+                </li>
+                <li onClick={() => nav("/signup")}>{user ? "" : "Register"}</li>
+                <li onClick={() => nav("/admin")}>Admin</li>
+                <li>{user ? "My orders" : ""}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <div className="text-white h-[370px] flex items-center">
           <div className="w-full">
             <h1 className="  text-[70px] font-AbrilRegular">Cart</h1>

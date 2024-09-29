@@ -17,6 +17,7 @@ const orderSchema = new mongoose.Schema({
         require:true,
       },
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
+     
       product: [{ type: mongoose.Schema.Types.ObjectId, ref: 'carts', required: true }],
      
      

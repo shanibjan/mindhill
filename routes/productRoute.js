@@ -5,6 +5,7 @@ import userModel from "../models/userModel.js";
 import { MongoUnexpectedServerResponseError } from "mongodb";
 import cartModel from "../models/cartModel.js";
 import orderModel from "../models/orderModel.js";
+import orderedUserModel from "../models/orderedUserModel.js";
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -228,7 +229,11 @@ router.put("/update-cart/:id", async (req, res) => {
       new: true,
     });
 
-    res.json({ success: true, message: "Already in cart,quantity Updated", item });
+    res.json({
+      success: true,
+      message: "Already in cart,quantity Updated",
+      item,
+    });
   } catch (err) {
     console.log(err);
 
@@ -236,28 +241,28 @@ router.put("/update-cart/:id", async (req, res) => {
   }
 });
 
-router.delete('/delete-cart/:id', async (req, res) => {
+router.delete("/delete-cart/:id", async (req, res) => {
   try {
-    
-    
     await cartModel.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Cart deleted' });
+    res.json({ message: "Cart deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-
-
-router.post('/create-order',async(req,res)=>{
+router.post("/create-order", async (req, res) => {
   try {
-    const {userId,cartId,address,bill}=req.body
-    console.log(address);
-    
-    if(!address){
+    const { userId, cartId, address, bill } = req.body;
+
+    if (!address) {
       return res.status(400).send({ message: "Fill Address" });
     }
-    const order=await new orderModel({user:userId,product:cartId,address,bill}).save()
+    const order = await new orderModel({
+      user: userId,
+      product: cartId,
+      address,
+      bill,
+    }).save();
     res.status(201).send({
       success: true,
       message: "order Added successfully",
@@ -265,20 +270,55 @@ router.post('/create-order',async(req,res)=>{
     });
   } catch (error) {
     console.log(error);
-    
   }
-})
+});
 
 router.get("/get-order/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await orderModel.find({user:userId}).populate('product')
-    console.log(user);
-    
+    const user = await orderModel.find({ user: userId }).populate("product");
+
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
   }
 });
+
+
+router.post("/create-ordered-users", async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    let orderedUser = await orderedUserModel.findOne();
+
+    if (!orderedUser) {
+      orderedUser = new orderedUserModel({ users: userId });
+    }
+
+    if (!orderedUser.users.includes(userId)) {
+      orderedUser.users.push(userId);
+      res.json({ message: "user added" });
+    }
+
+    await orderedUser.save();
+
+    res.status(200).json(orderedUser);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while processing the request." });
+  }
+});
+
+
+router.get("/get-ordered-users", async (req, res) => {
+  try {
+    const orderedUsers = await orderedUserModel.find().populate("users");
+    res.status(200).json(orderedUsers);
+  } catch (error) {}
+});
+
+
 export default router;

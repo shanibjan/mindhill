@@ -129,6 +129,10 @@ const Cart = () => {
       if (res.data.success) {
         window.alert(res.data.message);
       }
+
+      const response=await axios.post('api/v1/product/create-ordered-users',{userId})
+      console.log(response);
+      
     }
     } catch (error) {
      window.alert(error.response.data.message);

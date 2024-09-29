@@ -45,7 +45,7 @@ const LoginHeader = ({prop}) => {
                   <ul className="dropdown-menu text-[#244262] leading-[35px] ">
                     <li onClick={()=> nav('/login')} >{prop==="Register"?"Login":""}</li>
                     <li onClick={()=> nav('/signup')} >{prop==="Login"?"Register":""}</li>
-                    <li>Admin</li>
+                    <li onClick={()=>nav('/admin')} >Admin</li>
                   </ul>
                 </div>
               </div>
