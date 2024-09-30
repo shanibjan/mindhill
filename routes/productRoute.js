@@ -257,6 +257,8 @@ router.post("/create-order", async (req, res) => {
     if (!address) {
       return res.status(400).send({ message: "Fill Address" });
     }
+    console.log(cartId);
+    
     const order = await new orderModel({
       user: userId,
       product: cartId,
@@ -277,9 +279,10 @@ router.get("/get-order/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await orderModel.find({ user: userId }).populate("product");
+    const populatedOrders = await orderModel.find({ user: userId });
 
-    res.status(200).json(user);
+res.status(200).json(populatedOrders);
+
   } catch (error) {
     console.log(error);
   }
@@ -319,6 +322,43 @@ router.get("/get-ordered-users", async (req, res) => {
     res.status(200).json(orderedUsers);
   } catch (error) {}
 });
+
+router.put('/update-orders/:id',async(req,res)=>{
+  try {
+    const{status}=req.body
+    const orders=await orderModel.findByIdAndUpdate(req.params.id,req.body,{new:true})
+    console.log(req.body);
+    
+    if(status===""){
+      return res.status(400).send({ message: "Set status" });
+    }
+    res.json({
+      success: true,
+      message: "order status Updated",
+      orders,
+    });
+
+  } catch (error) {
+    
+  }
+})
+
+router.get('/search',async(req,res)=>{
+  try {
+    const searchQuery=req.query.q || '';
+
+    const searchedProducts=await productModel.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } },         // Search by name
+        { category: { $regex: searchQuery, $options: 'i' } },  // Search by description
+      ],
+    })
+    res.status(200).json(searchedProducts);
+  } catch (error) {
+    console.log(error);
+    
+  }
+})
 
 
 export default router;

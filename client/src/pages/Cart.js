@@ -150,6 +150,7 @@ const Cart = () => {
     <div>
       <CartHeader />
       <div className="px-[10%] py-[5%]">
+        
         <div>
           <div className="flex justify-between text-left py-[1%] text-[20px] font-AbrilRegular text-[#244262] items-center ">
             <div className="w-[5%]"></div>
@@ -169,7 +170,9 @@ const Cart = () => {
           </div>
           {data.map((items) => {
             const price = items.offerPrice * items.quantity;
-            cartId.push(items._id);
+            cartId.push(items);
+            console.log(cartId);
+            
 
             return (
               <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">

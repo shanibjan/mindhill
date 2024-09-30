@@ -81,7 +81,7 @@ const WishlistHeader = () => {
                 </li>
                 <li onClick={() => nav("/signup")}>{user ? "" : "Register"}</li>
                 <li onClick={() => nav("/admin")}>Admin</li>
-                <li>{user ? "My orders" : ""}</li>
+                <li onClick={()=>nav('/user_orders')} >{user ? "My orders" : ""}</li>
               </ul>
             </div>
           </div>

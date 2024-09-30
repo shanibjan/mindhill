@@ -10,6 +10,7 @@ import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import UserOrdersForAdmin from './pages/UserOrdersForAdmin';
 import UserOrders from "./pages/UserOrders";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
 
         <Routes>
           <Route Component={UserOrders} path="/user_orders" />
+        </Routes>
+
+        <Routes>
+          <Route Component={Search} path="/search" />
         </Routes>
       </Router>
     </div>

@@ -8,7 +8,7 @@ const UserOrdersForAdmin = () => {
   const [order,setOrder]=useState([])
   console.log(order);
   const location=useLocation()
-  
+  const [status,setStatus]=useState("")
   
   
 const userId=location.state.userId
@@ -19,10 +19,24 @@ const userId=location.state.userId
      
       
   }
+  const updateStatus=async(orderId)=>{
+    try {
+      const res=await axios.put(`api/v1/product/update-orders/${orderId}`,{status})
+      console.log(res.data);
+      fetchorder()
+      setStatus("")
+      
+    } catch (error) {
+      console.log(error);
+      window.alert(error.response.data.message)
+    }
+  }
 
   useEffect(()=>{
     fetchorder()
   },[])
+
+  order.sort((a, b) =>   new Date(b.createdAt)-new Date(a.createdAt));
   return (
     <div className="px-[3%]">
       <div>
@@ -95,14 +109,14 @@ const userId=location.state.userId
                 <div>
                   <div className="flex">
                     <h2>Change Status</h2>
-                    <select className="bg-[#EBF5FF]" name="" id="">
+                    <select onChange={(e)=>setStatus(e.target.value)} className="bg-[#EBF5FF]" name="" id="">
                       <option value=""></option>
-                      <option value="">Order Placed</option>
-                      <option value="">Shipped</option>
-                      <option value="">Delivered</option>
+                      <option value="Order Placed">Order Placed</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
                     </select>
                   </div>
-                  <button className="bg-[#94C4F7] py-[3%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] m-[10%]  text-white ">
+                  <button onClick={()=>updateStatus(items._id)} className="bg-[#94C4F7] py-[3%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] m-[10%]  text-white ">
                     UPDATE STATUS
                   </button>
                 </div>

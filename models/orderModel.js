@@ -18,7 +18,15 @@ const orderSchema = new mongoose.Schema({
       },
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
      
-      product: [{ type: mongoose.Schema.Types.ObjectId, ref: 'carts', required: true }],
+      product: [
+        {
+          _id: {  type: String, required: true   },
+          name: { type: String, required: true },
+          img1: { type: String, required: true },
+          offerPrice:{type: Number, required: true },
+          quantity:{type: Number, required: true }
+        }
+      ]
      
      
     },
