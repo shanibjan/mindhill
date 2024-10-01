@@ -144,6 +144,10 @@ const ProductOverView = () => {
     }
   }
 
+
+  const logos=[
+    {logo:faFacebook},{logo:faInstagram},{logo:faLinkedin},{logo:faPinterest},{logo:faTwitter}
+  ]
   return (
     <div>
       <ProductHeader />
@@ -178,10 +182,10 @@ const ProductOverView = () => {
         </div>
         <div className="text-left flex items-center ">
           <div>
-            <h1 className="text-[40px] font-AbrilRegular text-[#244262] ">
+            <h1 className="text-[40px] font-AbrilRegular text-[#244262] max-[450px]:text-[30px] ">
               {postDetails.name}
             </h1>
-            <div className="flex font-gorditaRegular my-[3%] text-[#244262] items-center   ">
+            <div className="flex font-gorditaRegular my-[3%] text-[#244262] items-center max-[400px]:block  ">
               <div className="mr-[5%] grid grid-cols-5 gap-x-2  text-[23px] ">
                 {stars.map((star, index) => {
                   return <h4>{index < postDetails.rating ? "★" : star}</h4>;
@@ -189,7 +193,7 @@ const ProductOverView = () => {
               </div>
               <h4>({review.length} Customer review)</h4>
             </div>
-            <div className="flex justify-start font-AbrilRegular text-[30px] ">
+            <div className="flex justify-start font-AbrilRegular text-[30px] max-[450px]:text-[25px] ">
               <h4 className=" text-[#FFA27E] "> ₹{postDetails.offerPrice}</h4>
               <h4 className="line-through ml-[17%] text-[#244262] ">
                 ₹{postDetails.price}
@@ -261,22 +265,16 @@ const ProductOverView = () => {
                 <h3 className="font-AbrilRegular text-[20px]  mr-[5%]">
                   Share:
                 </h3>
-                <div className="flex justify-between w-[50%] text-white ">
-                  <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                    <FontAwesomeIcon icon={faFacebook} className="h-[18px] " />
-                  </div>
-                  <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                    <FontAwesomeIcon icon={faInstagram} className="h-[18px] " />
-                  </div>
-                  <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                    <FontAwesomeIcon icon={faTwitter} className="h-[18px] " />
-                  </div>
-                  <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                    <FontAwesomeIcon icon={faLinkedin} className="h-[18px] " />
-                  </div>
-                  <div className="bg-[#94C4F7] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center">
-                    <FontAwesomeIcon icon={faPinterest} className="h-[18px] " />
-                  </div>
+                <div className="flex justify-between w-[50%] max-[550px]:w-[80%] text-white ">
+                  {logos.map((logo)=>{
+                    return(
+                      <div className="bg-[#94C4F7] rounded-[50%] w-[40px]  h-[40px] max-[350px]:w-[30px] max-[350px]:h-[30px] flex justify-center items-center">
+                      <FontAwesomeIcon icon={logo.logo} className="h-[18px] " />
+                    </div>
+                    )
+                  })}
+                 
+                  
                 </div>
               </div>
             </div>
@@ -325,17 +323,17 @@ const ProductOverView = () => {
           </div>
         ) : bg === "Additional Info" ? (
           <div className="py-[3%] px-[15%] text-[20px]">
-            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 ">
-              <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]">
+            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 items-end ">
+              <h2 className="w-[30%] max-[650px]:w-[40%] max-[450px]:w-[45%] text-left max-[400px]:text-[15px] font-AbrilRegular text-[#244262]">
                 Weight
               </h2>
-              <p className="font-gorditaRegular"> 1 kg </p>
+              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] "> 1 kg </p>
             </div>
-            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 ">
-              <h2 className="w-[30%] text-left font-AbrilRegular text-[#244262]">
+            <div className="flex py-[1%] border-b-[1px] border-b-gray-200 items-end ">
+              <h2 className="w-[30%] max-[650px]:w-[40%] max-[450px]:w-[45%] text-left max-[400px]:text-[15px] font-AbrilRegular text-[#244262]">
                 Dimensions
               </h2>
-              <p className="font-gorditaRegular">10 × 10 × 30 cm</p>
+              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] ">10 × 10 × 30 cm</p>
             </div>
           </div>
         ) : (
