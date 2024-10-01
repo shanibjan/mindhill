@@ -10,7 +10,10 @@ import { useNavigate } from "react-router-dom";
 
 const WishList = () => {
   const [data, setData] = useState([]);
+  console.log(data);
+  
 const nav=useNavigate()
+const [a, setA] = useState("");
 const{setPostDetails}=useContext(PostContext)
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
@@ -42,10 +45,16 @@ const{setPostDetails}=useContext(PostContext)
       
     }
   }
+
+  setTimeout(() => {
+    setA("Sorry, your wishlist is empty");
+  }, 500);
+  console.log(a);
   return (
     <div>
       <WishlistHeader />
-      <div className="px-[10%] py-[5%]">
+      {data.length>0?(
+        <div className="px-[10%] py-[5%]">
         <div className="flex justify-between text-left py-[1%] text-[20px] font-AbrilRegular text-[#244262] items-center ">
           <div className="w-[5%]"></div>
           <div className="w-[10%]"></div>
@@ -60,6 +69,8 @@ const{setPostDetails}=useContext(PostContext)
           </div>
           <div className="w-[20%]"></div>
         </div>
+
+        
         {data.map((items) => {
           return (
             <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
@@ -91,8 +102,9 @@ const{setPostDetails}=useContext(PostContext)
               </div>
             </div>
           );
-        })}
-      </div>
+        })} </div>):(<h2 className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%]" >{a}</h2>)}
+      
+     
       <Footer />
     </div>
   );
