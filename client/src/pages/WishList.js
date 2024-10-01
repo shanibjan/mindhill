@@ -54,28 +54,28 @@ const{setPostDetails}=useContext(PostContext)
     <div>
       <WishlistHeader />
       {data.length>0?(
-        <div className="px-[10%] py-[5%]">
-        <div className="flex justify-between text-left py-[1%] text-[20px] font-AbrilRegular text-[#244262] items-center ">
+        <div className="px-[10%] py-[5%] ">
+        <div className="flex justify-between text-left py-[1%] text-[20px] max-[550px]:text-[15px] font-AbrilRegular text-[#244262] items-center ">
           <div className="w-[5%]"></div>
-          <div className="w-[10%]"></div>
-          <div className="w-[25%]">
+          <div className="w-[10%] max-[550px]:w-[2%]"></div>
+          <div className="w-[25%] max-[430px]:w-[20%]">
             <h1>Product</h1>
           </div>
-          <div className="w-[20%]">
+          <div className="w-[20%] max-[430px]:w-[20%]">
             <h1>Price</h1>
           </div>
-          <div className="w-[20%]">
+          <div className="w-[20%] max-[430px]:hidden">
             <h1>Stock Status</h1>
           </div>
-          <div className="w-[20%]"></div>
+          <div className="w-[20%] max-[430px]:w-[20%]"></div>
         </div>
 
         
         {data.map((items) => {
           return (
-            <div className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
+            <div className="flex justify-between text-left py-[1%] text-[16px] max-[550px]:text-[13px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]">
               <div className="w-[5%]">
-                <div className=" cursor-pointer h-[100px] flex justify-center items-center">
+                <div className=" cursor-pointer h-[100px] max-[550px]:h-[55px] flex justify-center items-center">
                   <FontAwesomeIcon
                   onClick={()=>removeFav(items._id)}
                     icon={faTimesCircle}
@@ -83,20 +83,20 @@ const{setPostDetails}=useContext(PostContext)
                   />
                 </div>
               </div>
-              <div  className="w-[10%] p-[1%]">
-                <img src={items.img1} alt="" />
+              <div  className="w-[10%] p-[1%] max-[550px]:w-[2%] ">
+                <img className="max-[550px]:hidden" src={items.img1} alt="" />
               </div>
-              <div className="w-[25%]">
+              <div className="w-[25%] max-[430px]:w-[20%]">
                 <h1>{items.name}</h1>
               </div>
-              <div className="w-[20%]">
+              <div className="w-[20%] max-[430px]:w-[20%]">
                 <h1>₹{items.offerPrice}</h1>
               </div>
-              <div className="w-[20%]">
+              <div className="w-[20%] max-[430px]:hidden">
                 <h4>In stock</h4>
               </div>
-              <div className="w-[20%]">
-                <button onClick={()=>{setPostDetails(items);nav('/overview')}} className="bg-[#94C4F7] py-[5%] px-[10%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
+              <div className="w-[20%] max-[430px]:w-[25%]">
+                <button onClick={()=>{setPostDetails(items);nav('/overview')}} className="bg-[#94C4F7] py-[5%] px-[10%] font-gorditaBold text-[12px] max-[430px]:w-[100%] max-[430px]:text-[8px] tracking-[2px]  text-white">
                  VIEW DETAILS
                 </button>
               </div>

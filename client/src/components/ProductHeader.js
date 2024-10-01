@@ -184,9 +184,7 @@ const ProductHeader = () => {
               quidem veniam obcaecati, repellendus inventore provident cumque
               consectetur ipsum aut? Incidunt ipsa in modi excepturi!
             </p>
-            <button className="bg-[#94C4F7] py-[1%] px-[3%] max-[600px]:py-[3%]  max-[600px]:px-[5%] font-gorditaMedium more">
-              VIEW MORE
-            </button>
+            
           </div>
         </div>
       </div>

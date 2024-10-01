@@ -39,7 +39,7 @@ const WishlistHeader = () => {
   return (
     <div>
       <div
-        className="overflow-hidden py-[3%] px-[4%] bg-cover bg"
+        className="overflow-hidden max-[550px]:overflow-visible py-[3%] px-[4%] bg-cover bg"
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${Wishlist}) center/cover`,
         }}
@@ -54,27 +54,27 @@ const WishlistHeader = () => {
                 transition={{ duration: 0.5 }}
                 className="absolute w-full z-[200]"
               >
-                <div className="flex items-center bg-white px-[3%]">
+                <div className="flex items-center justify-between bg-white px-[3%]">
                   <input
                     type="text"
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setsearchQuery(e.target.value)}
-                    className="w-[90%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
+                    className="w-[90%] max-[550px]:w-[70%] h-[70px]  text-[20px] max-[550px]:text-[15px] text-[#244262] font-gorditaRegular outline-none"
                   />
 
                   <div
                     onClick={searchProducts}
-                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white"
+                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] max-[550px]:w-[30px] max-[550px]:h-[30px] flex justify-center items-center text-white"
                   >
-                    <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
 
                   <div
                     onClick={() => setIsSearchVisible((prev) => !prev)}
-                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white ml-[3%]"
+                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] max-[550px]:w-[30px] max-[550px]:h-[30px] flex justify-center items-center text-white ml-[3%]"
                   >
-                    <FontAwesomeIcon icon={faTimes} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faTimes} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 </div>
               </motion.div>
@@ -83,16 +83,16 @@ const WishlistHeader = () => {
 
           <div className="flex justify-between text-white items-center">
             <div onClick={() => nav("/")}>
-              <h2 className="font-AbrilRegular text-[40px] cursor-pointer">
+              <h2 className="font-AbrilRegular text-[40px] max-[550px]:text-[25px] cursor-pointer">
                 MIND HILL
               </h2>
             </div>
             <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium cursor-pointer">
               <div
                 onClick={janu}
-                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center"
+                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[35px] max-[550px]:h-[35px] flex justify-center items-center"
               >
-                <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
               </div>
 
               
@@ -100,16 +100,16 @@ const WishlistHeader = () => {
                 onClick={() => {
                   user ? nav("/cart") : window.alert("Please Login");
                 }}
-                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[35px] max-[550px]:h-[35px] flex justify-center items-center relative"
               >
-                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px]" />
-                <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
+                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px] max-[550px]:h-[15px]" />
+                <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] max-[550px]:w-[20px] max-[550px]:h-[20px] max-[550px]:text-[12px] rounded-[50%] p-[5%]">
                   {user ? data.length : "0"}
                 </h1>
               </div>
               <div className="dropdown">
                 {user ? (
-                  <div className="rounded-[50%] w-[50px] h-[50px]">
+                  <div className="rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[35px] max-[550px]:h-[35px] ">
                     <img
                       className="h-full w-full object-cover rounded-[50%]"
                       src={user.profile}
@@ -117,12 +117,12 @@ const WishlistHeader = () => {
                     />
                   </div>
                 ) : (
-                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
-                    <FontAwesomeIcon icon={faUser} className="h-[23px]" />
+                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[35px] max-[550px]:h-[35px] flex justify-center items-center ">
+                    <FontAwesomeIcon icon={faUser} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 )}
 
-                <ul className="dropdown-menu text-[#244262] leading-[35px] ">
+                <ul className="dropdown-menu text-[#244262] leading-[35px] max-[1000px]:px-[20px] max-[1000px]:left-[-60px] max-[550px]:left-[-80px]  max-[550px]:text-[11px]  max-[550px]:w-[135px] max-[470px]:left-[-97px] max-[470px]:px-[10px]  max-[1000px]:w-[150px] ">
                   <li
                     onClick={() => {
                       localStorage.removeItem("user");
@@ -144,8 +144,8 @@ const WishlistHeader = () => {
             </div>
           </div>
         </div>
-        <div className="text-white h-[370px] flex items-center">
-          <div className="w-full">
+        <div className="text-white h-[370px] max-[550px]:h-0 flex items-center">
+          <div className="w-full max-[550px]:hidden">
             <h1 className="  text-[70px] font-AbrilRegular">Wishlist</h1>
             <p className="font-gorditaRegular my-[4%]">
               {" "}
