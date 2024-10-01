@@ -36,6 +36,7 @@ const AddProducts = ({ }) => {
             if(res.data.success){
               setImage([])
               window.alert(res.data.message)
+              window.location.reload(); 
              
           }else{
               window.alert(res.data.message)

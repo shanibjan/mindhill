@@ -77,7 +77,11 @@ const Header = () => {
   
 
   
-
+const searchProducts=()=>{
+  console.log(searchQuery);
+  
+  nav('/search',{state:searchQuery})
+}
   
   return (
     <div>
@@ -106,10 +110,7 @@ const Header = () => {
                     className="w-[90%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
                   />
 
-                  <div onClick={()=>
-                    nav('/search',{state:searchQuery})
-                    
-                  } className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white">
+                  <div onClick={searchProducts} className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white">
                     <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
                   </div>
 
