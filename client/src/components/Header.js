@@ -82,7 +82,7 @@ const Header = () => {
   return (
     <div>
       <div
-        className="overflow-hidden py-[3%] px-[4%] bg-cover bg"
+        className="overflow-hidden py-[3%] px-[4%] max-[450px]:px-[10%] bg-cover bg"
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${bg1}) center/cover`,
         }}
@@ -97,14 +97,14 @@ const Header = () => {
                 transition={{ duration: 0.5 }}
                 className="absolute w-full z-[200]"
               >
-                <div className="flex items-center bg-white px-[3%]">
+                <div className="flex justify-between items-center bg-white px-[3%]">
                   <input
                     ref={inputRef}
                     type="text"
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setsearchQuery(e.target.value)}
-                    className="w-[90%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
+                    className="w-[90%] max-[800px]:w-[75%] max-[500px]:w-[70%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
                   />
 
                   <div
@@ -125,13 +125,13 @@ const Header = () => {
             )}
           </AnimatePresence>
 
-          <div className="flex justify-between text-white items-center">
+          <div className="flex justify-between text-white items-center max-[600px]:block">
             <div onClick={() => nav("/")}>
-              <h2 className="font-AbrilRegular text-[40px] cursor-pointer">
+              <h2 className="font-AbrilRegular text-[40px] cursor-pointer max-[600px]:mb-[6%]">
                 MIND HILL
               </h2>
             </div>
-            <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium cursor-pointer">
+            <div className="flex justify-between w-[30%] max-lg:w-[50%] max-[600px]:w-full items-center font-gorditaMedium cursor-pointer">
               <div
                 onClick={janu}
                 className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center"
@@ -176,7 +176,7 @@ const Header = () => {
                   </div>
                 )}
 
-                <ul className="dropdown-menu text-[#244262] leading-[35px] ">
+                <ul className="dropdown-menu text-[#244262] leading-[35px] max-[1000px]:px-[20px] max-[1000px]:left-[-60px] max-[500px]:left-[-80px] max-[1000px]:w-[150px] ">
                   <li
                     onClick={() => {
                       localStorage.removeItem("user");
@@ -201,27 +201,27 @@ const Header = () => {
 
         <div className="text-white h-[513px] flex items-center">
           <div className="slideInFromTop">
-            <h4 className="text-[25px] tracking-[25px] font-gorditaRegular">
+            <h4 className="text-[25px] max-[560px]:text-[20px] max-[460px]:text-[17px] max-[400px]:text-[15px] max-[400px]:tracking-[12px] tracking-[25px] font-gorditaRegular">
               ORGANIC
             </h4>
-            <h1 className="  text-[100px] font-AbrilRegular">Green Way</h1>
+            <h1 className="  text-[100px] max-[560px]:text-[70px] max-[460px]:text-[60px] max-[400px]:text-[50px] font-AbrilRegular">Green Way</h1>
             <p className="font-gorditaRegular my-[4%]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Assumenda, eum accusantium laboriosam dignissimos eveniet debitis
               quidem veniam obcaecati, repellendus inventore provident cumque
               consectetur ipsum aut? Incidunt ipsa in modi excepturi!
             </p>
-            <button className="bg-[#94C4F7] py-[1%] px-[3%] font-gorditaMedium more">
+            <button className="bg-[#94C4F7] py-[1%] px-[3%] max-[600px]:py-[3%]  max-[600px]:px-[5%] font-gorditaMedium more">
               VIEW MORE
             </button>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 py-[3%] px-[4%] gap-x-[5%] shadow-lg">
+      <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2  max-[450px]:grid-cols-1  py-[3%] px-[4%] gap-x-[5%] shadow-lg">
         {icons.map((icon) => {
           return (
-            <div className="flex justify-between items-center ">
+            <div className="flex justify-evenly items-center ">
               <div>
                 <img className="w-full" src={icon.src} alt="" />
               </div>

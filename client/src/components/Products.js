@@ -116,8 +116,8 @@ const Products = () => {
   return (
     <div>
       <div>
-        <div className=" py-[4%]">
-          <h2 className="font-AbrilRegular text-[60px] text-[#244262]">
+        <div className=" py-[4%] px-[10%]">
+          <h2 className="font-AbrilRegular text-[60px] max-[550px]:text-[45px] max-[450px]:text-[40px] text-[#244262]">
             New Products
           </h2>
           <p className="font-gorditaRegular text-[#848484]">
@@ -125,7 +125,7 @@ const Products = () => {
             eiusmod tempor incididunt ut labore
           </p>
         </div>
-        <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 px-[4%] gap-y-10 ">
+        <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 px-[4%] max-[450px]:px-[10%] gap-y-10 ">
           {productIcons.map((icon, index) => {
             return (
               <div
@@ -149,7 +149,7 @@ const Products = () => {
           })}
         </div>
       </div>
-      <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] gap-12 ">
+      <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] max-[450px]:p-[10%] gap-12 ">
 
         { bgColor==="Show All" ?(products.map((product) => {
           return (
@@ -157,7 +157,7 @@ const Products = () => {
               style={{
                 background: `url(${product.img1}) center/cover`,
               }}
-              className="relative h-[500px] "
+              className="relative h-[500px] max-[1200px]:h-[400px] "
             >
               {/* <div>
                     <img src={product.src} alt="" />
