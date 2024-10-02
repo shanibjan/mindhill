@@ -109,18 +109,18 @@ const ProductHeader = () => {
             <div className="flex justify-between w-[30%] max-lg:w-[50%] max-[600px]:w-full items-center font-gorditaMedium cursor-pointer">
               <div
                 onClick={janu}
-                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center"
+                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center"
               >
-                <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
               </div>
 
               <div
                 onClick={() => {
                   user ? nav("/wishlist") : window.alert("Please Login");
                 }}
-                className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+                className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center relative"
               >
-                <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
+                <FontAwesomeIcon icon={faHeart} className="h-[23px] max-[550px]:h-[15px]" />
                 <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
                   {user ? wishlist.length : "0"}
                 </h1>
@@ -129,16 +129,16 @@ const ProductHeader = () => {
                 onClick={() => {
                   user ? nav("/cart") : window.alert("Please Login");
                 }}
-                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center relative"
               >
-                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px]" />
+                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px] max-[550px]:h-[15px]" />
                 <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
                   {user ? data.length : "0"}
                 </h1>
               </div>
               <div className="dropdown">
                 {user ? (
-                  <div className="rounded-[50%] w-[50px] h-[50px]">
+                  <div className="rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] ">
                     <img
                       className="h-full w-full object-cover rounded-[50%]"
                       src={user.profile}
@@ -146,8 +146,8 @@ const ProductHeader = () => {
                     />
                   </div>
                 ) : (
-                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
-                    <FontAwesomeIcon icon={faUser} className="h-[23px]" />
+                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center ">
+                    <FontAwesomeIcon icon={faUser} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 )}
 

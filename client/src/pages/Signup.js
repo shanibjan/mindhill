@@ -75,16 +75,16 @@ const Signup = () => {
       <LoginHeader prop={"Register"} />
 
      
-      <div className="mb-[4%] mt-[14%]">
-        <h1 className="text-[40px] font-AbrilRegular text-[#244262]">
+      <div className="mb-[4%] mt-[14%] max-[600px]:mt-[30%] max-[500px]:pt-[15%]">
+        <h1 className="text-[40px] max-[550px]:text-[30px] max-[370px]:text-[25px] font-AbrilRegular text-[#244262]">
           User Registration
         </h1>
-        <h4 className="text-[30px] font-gorditaRegular text-[#244262] my-[4%] ">
+        <h4 className="text-[30px] max-[550px]:text-[20px] max-[370px]:text-[15px] font-gorditaRegular text-[#244262] my-[4%] ">
           Provide User information here
         </h4>
-        <div></div>
+        <div className="max-[450px]:text-[10px]" >
         <input
-          className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
+          className="bg-[#EBF5FF] w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%] py-[1%] px-[2%] mb-[2%]"
           type="text"
           placeholder="Username"
           value={name}
@@ -92,7 +92,7 @@ const Signup = () => {
         />
         <br />
         <input
-          className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
+          className="bg-[#EBF5FF] w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%] py-[1%] px-[2%] mb-[2%]"
           type="email"
           placeholder="Email"
           value={email}
@@ -100,7 +100,7 @@ const Signup = () => {
         />
         <br />
         <input
-          className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
+          className="bg-[#EBF5FF] w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%] py-[1%] px-[2%] mb-[2%]"
           type="number"
           placeholder="Phone"
           value={phone}
@@ -110,7 +110,7 @@ const Signup = () => {
         <p className="text-red-500">
           {valid ? "enter a valid phone number" : ""}
         </p>
-        <div className="w-[30%] mx-auto text-left font-gorditaRegular text-gray-400 ">
+        <div className="w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%] mx-auto text-left font-gorditaRegular text-gray-400 ">
           <label htmlFor="">Add your Profile</label>
         </div>
         <br />
@@ -120,18 +120,19 @@ const Signup = () => {
           name="filename"
           multiple
           accept=".jpg,.jpeg,.png"
-          className="px-[.6%] py-[1%] bg-[#EBF5FF]  w-[30%]  mb-[2%] font-gorditaRegular"
+          className="px-[.6%] py-[1%] bg-[#EBF5FF]  w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%]  mb-[2%] font-gorditaRegular"
           onChange={store}
         />{" "}
         <br />
         <input
-          className="bg-[#EBF5FF] w-[30%] py-[1%] px-[2%] mb-[2%]"
+          className="bg-[#EBF5FF] w-[30%] max-[750px]:w-[50%] max-[500px]:w-[60%] py-[1%] px-[2%] mb-[2%]"
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
+        </div>
         <button
           onClick={register}
           className="bg-[#94C4F7] py-[1%] px-[5%] font-gorditaBold text-[12px] tracking-[2px] mb-[5%]  text-white"
@@ -140,11 +141,11 @@ const Signup = () => {
         </button>
         <h4
           onClick={() => nav("/login")}
-          className="text-[20px] font-gorditaMedium text-[#244262] my-[3%] cursor-pointer"
+          className="text-[20px] max-[450px]:text-[15px] font-gorditaMedium text-[#244262] my-[3%] cursor-pointer"
         >
           Go to Login page
         </h4>
-        <h4 className="text-[20px] font-gorditaMedium text-[#244262] cursor-pointer ">
+        <h4 className="text-[20px] max-[450px]:text-[15px] font-gorditaMedium text-[#244262] cursor-pointer ">
           Go to Home page
         </h4>
       </div>
