@@ -157,13 +157,13 @@ const Cart = () => {
         <div>
           <div className="px-[10%] py-[5%]">
             <div>
-              <div className="flex justify-between text-left py-[1%] text-[20px] font-AbrilRegular text-[#244262] items-center ">
+              <div className="flex justify-between text-left py-[1%] text-[20px] max-[550px]:text-[15px] font-AbrilRegular text-[#244262] items-center ">
                 <div className="w-[5%]"></div>
-                <div className="w-[10%]"></div>
+                <div className="w-[10%] max-[550px]:hidden"></div>
                 <div className="w-[25%]">
                   <h1>Product</h1>
                 </div>
-                <div className="w-[20%]">
+                <div className="w-[20%] max-[550px]:hidden">
                   <h1>Price</h1>
                 </div>
                 <div className="w-[20%]">
@@ -182,12 +182,12 @@ const Cart = () => {
                 return (
                   <div
                     key={items._id}
-                    className="flex justify-between text-left py-[1%] text-[16px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]"
+                    className="flex justify-between text-left py-[1%] text-[16px] max-[550px]:text-[13px] font-gorditaRegular text-[#244262] items-center border-y-[1px] border-y-gray-300 h-[115px]"
                   >
                     <div className="w-[5%]">
                       <div
                         onClick={() => deleteCart(items._id)}
-                        className=" cursor-pointer h-[100px] flex justify-center items-center"
+                        className=" cursor-pointer h-[100px] max-[550px]:h-[55px] flex justify-center items-center"
                       >
                         <FontAwesomeIcon
                           icon={faTimesCircle}
@@ -195,18 +195,18 @@ const Cart = () => {
                         />
                       </div>
                     </div>
-                    <div className="w-[10%] p-[1%]">
-                      <img src={items.img1} alt="" />
+                    <div className="w-[10%] p-[1%] max-[550px]:hidden">
+                      <img className="max-[550px]:hidden" src={items.img1} alt="" />
                     </div>
                     <div className="w-[25%]">
                       <h1>{items.name}</h1>
                     </div>
-                    <div className="w-[20%]">
+                    <div className="w-[20%] max-[550px]:hidden">
                       <h1>₹{items.offerPrice}</h1>
                     </div>
                     <div className="w-[20%]">
-                      <div className="flex items-center h-[54px] ">
-                        <div className="py-[15px] px-[25px] bg-[#EBF5FF] font-gorditaRegular">
+                      <div className="flex items-center h-[54px] max-[550px]:h-[43px] max-[400px]:h-[39px] ">
+                        <div className="py-[15px] px-[25px] max-[550px]:py-[12px] max-[550px]:px-[20px] max-[400px]:py-[10px] max-[400px]:px-[15px] bg-[#EBF5FF] font-gorditaRegular">
                           <h3>{items.quantity}</h3>
                         </div>
                         <div className="grid grid-rows-2 gap-y-[3%] h-full">
@@ -214,7 +214,7 @@ const Cart = () => {
                             onClick={() =>
                               updateQuantity(items.quantity, "+", items._id)
                             }
-                            className="bg-[#94C4F7] w-[27px]  flex justify-center items-center"
+                            className="bg-[#94C4F7] w-[27px] max-[550px]:w-[20px] max-[400px]:w-[16px]  flex justify-center items-center"
                           >
                             <FontAwesomeIcon
                               icon={faAngleUp}
@@ -225,7 +225,7 @@ const Cart = () => {
                             onClick={() =>
                               updateQuantity(items.quantity, "-", items._id)
                             }
-                            className="bg-[#94C4F7] w-[27px]  flex justify-center items-center"
+                            className="bg-[#94C4F7] w-[27px] max-[550px]:w-[20px] max-[400px]:w-[16px]  flex justify-center items-center"
                           >
                             <FontAwesomeIcon
                               icon={faAngleDown}
@@ -244,27 +244,27 @@ const Cart = () => {
             </div>
 
             <div className="flex justify-between my-[5%]">
-              <div className="flex justify-between w-[35%] ">
+              <div className="flex justify-between w-[35%] max-[500px]:w-[20%] ">
                 <input
-                  className="bg-[#EBF5FF]  p-[2%]"
+                  className="bg-[#EBF5FF]  p-[2%] max-[450px]:w-[110px] max-[450px]:text-[12px] "
                   type="text"
                   placeholder="Coupon code"
                 />
-                <button className="bg-[#94C4F7] py-[4%] px-[10%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
+                <button className="bg-[#94C4F7] py-[4%] px-[10%] font-gorditaBold text-[12px] max-[550px]:text-[8px]  tracking-[2px]  text-white">
                   ADD COUPON
                 </button>
               </div>
               <div className="w-[30%] text-end">
-                <button className="bg-[#94C4F7] py-[4%] px-[10%] font-gorditaBold text-[12px] tracking-[2px]  text-white">
+                <button className="bg-[#94C4F7] py-[4%] px-[10%] font-gorditaBold text-[12px] max-[550px]:text-[8px] tracking-[2px]  text-white">
                   PROCEED TO PAY
                 </button>
               </div>
             </div>
 
             <div className="font-AbrilRegular text-[#244262]">
-              <h1 className="text-[30px] text-left ">Delivery Address</h1>
+              <h1 className="text-[30px] max-[550px]:text-[25px] text-left ">Delivery Address</h1>
               <textarea
-                className="bg-[#EBF5FF] w-full h-[300px] font-gorditaRegular p-[2%]"
+                className="bg-[#EBF5FF] w-full h-[300px] max-[550px]:text-[12px] font-gorditaRegular p-[2%]"
                 name=""
                 id=""
                 placeholder="Delivery Address here"
@@ -274,22 +274,22 @@ const Cart = () => {
             </div>
 
             <div>
-              <h1 className="font-AbrilRegular text-[30px] text-left text-[#244262] my-[3%]">
+              <h1 className="font-AbrilRegular text-[30px] max-[600px]:text-[25px] text-left text-[#244262] my-[3%]">
                 Cart Totals
               </h1>
-              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%]">
-                <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
+              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] text-[18px] max-[600px]:text-[15px] max-[400px]:text-[12px]">
+                <h4 className="w-[30%] max-[550px]:w-[50%] font-AbrilRegular text-[#244262]  ">
                   Subtotal
                 </h4>
-                <h5 className="w-[70%] font-gorditaRegular text-[18px]">
+                <h5 className="w-[70%] font-gorditaRegular ">
                   ₹{total}
                 </h5>
               </div>
-              <div className="flex text-left items-center border-b-[1px] border-b-gray-200 py-[2%] ">
-                <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
+              <div className="flex text-left items-center border-b-[1px] border-b-gray-200 py-[2%] text-[18px] max-[600px]:text-[15px] max-[400px]:text-[12px] ">
+                <h4 className="w-[30%] max-[550px]:w-[50%] font-AbrilRegular text-[#244262] ">
                   Payment Method
                 </h4>
-                <div className="w-[70%] font-gorditaRegular text-[18px]">
+                <div className="w-[70%] font-gorditaRegular ">
                   <input
                     onChange={(e) => setRadio(e.target.value)}
                     type="radio"
@@ -306,23 +306,23 @@ const Cart = () => {
                   <label>Online Payment</label>
                 </div>
               </div>
-              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] ">
-                <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
+              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] text-[18px] max-[600px]:text-[15px] max-[400px]:text-[12px] ">
+                <h4 className="w-[30%] max-[550px]:w-[50%] font-AbrilRegular text-[#244262] ">
                   Delivery charge
                 </h4>
-                <h5 className="w-[70%] font-gorditaRegular text-[18px]">₹50</h5>
+                <h5 className="w-[70%] font-gorditaRegular ">₹50</h5>
               </div>
-              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] ">
-                <h4 className="w-[30%] font-AbrilRegular text-[#244262] text-[18px]">
+              <div className="flex text-left border-b-[1px] border-b-gray-200 py-[2%] text-[18px] max-[600px]:text-[15px] max-[400px]:text-[12px] ">
+                <h4 className="w-[30%] max-[550px]:w-[50%] font-AbrilRegular text-[#244262] ">
                   Total
                 </h4>
-                <h5 className="w-[70%] font-gorditaRegular text-[18px]">
+                <h5 className="w-[70%] font-gorditaRegular ">
                   ₹{total + 50}
                 </h5>
               </div>
               <button
                 onClick={checkOut}
-                className="bg-[#94C4F7] py-[2%] px-[3%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white"
+                className="bg-[#94C4F7] py-[2%] px-[3%] max-[550px]:py-[5%] max-[550px]:px-[7%] my-[2%] font-gorditaBold text-[12px] tracking-[2px]  text-white"
               >
                 PROCEED TO CHECKOUT
               </button>
