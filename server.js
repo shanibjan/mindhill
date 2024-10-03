@@ -5,8 +5,9 @@ import cors from 'cors';
 import authRoutes from './routes/authRoute.js'
 import productRoute from './routes/productRoute.js'
 import paymentRoute from './routes/paymentRoute.js'
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from "path";
+import { fileURLToPath } from "url";
+
 
 dotenv.config();
 
@@ -26,6 +27,12 @@ app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/payment',paymentRoute);
 // Serve static files from the public directory (development only)
+
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 
 
