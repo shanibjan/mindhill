@@ -58,7 +58,7 @@ const Products = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        'api/v1/product/get-product/'
+        'https://mindhill-7.onrender.com/api/v1/product/get-product/'
       );
       setProducts(response.data);
     } catch (error) {
