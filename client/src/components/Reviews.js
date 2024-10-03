@@ -21,7 +21,7 @@ const Reviews = (props) => {
   
 
   const fetchData=async()=>{
-    const res=await axios.get(`api/v1/product/get-review/${productId}`)
+    const res=await axios.get(`https://mindhill-7.onrender.com/api/v1/product/get-review/${productId}`)
     setReview(res.data);
     
   }
