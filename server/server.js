@@ -15,7 +15,14 @@ dotenv.config();
 connectDB();
 
 const app = express()
-app.use(cors());
+
+const corsOptions = {
+  origin: 'https://mindhill-8.onrender.com', // Your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  credentials: true, // Allow cookies to be sent
+  optionsSuccessStatus: 200 // For legacy browsers
+};
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' })); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
