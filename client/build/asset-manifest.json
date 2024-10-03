@@ -1,14 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.4790fb8f.css",
-    "main.js": "/static/js/main.8a5ceaa1.js",
+    "main.css": "/static/css/main.5d960f85.css",
+    "main.js": "/static/js/main.fe442860.js",
     "static/js/453.419a5d54.chunk.js": "/static/js/453.419a5d54.chunk.js",
     "static/media/bg-1.jpg": "/static/media/bg-1.ee11e68dcd44650a4465.jpg",
     "static/media/h431.png": "/static/media/h431.285afb2a5c28abb53a34.png",
-    "static/media/bg-2.jpg": "/static/media/bg-2.851694bac3da76308418.jpg",
     "static/media/cart.jpg": "/static/media/cart.ef3a1349deb6dc0a6f1f.jpg",
     "static/media/wishlist.jpg": "/static/media/wishlist.b7efd933dff66dd661b1.jpg",
-    "static/media/bg-3.jpg": "/static/media/bg-3.c4fe1f770c1949d6a569.jpg",
     "static/media/product-overview.jpg": "/static/media/product-overview.5161841645ba10c33fec.jpg",
     "static/media/Gordita Bold.woff": "/static/media/Gordita Bold.162fc0c81c4880cb73f9.woff",
     "static/media/Gordita Medium.woff": "/static/media/Gordita Medium.8667baffc43f0db04fc3.woff",
@@ -35,12 +33,12 @@
     "static/media/icon-1.webp": "/static/media/icon-1.5d63aa8d81562edbe40d.webp",
     "static/media/p-icon-2.webp": "/static/media/p-icon-2.fcc59abfa6b6436f50c8.webp",
     "static/media/p-icon-3.webp": "/static/media/p-icon-3.21720f0098f46c16b95c.webp",
-    "main.4790fb8f.css.map": "/static/css/main.4790fb8f.css.map",
-    "main.8a5ceaa1.js.map": "/static/js/main.8a5ceaa1.js.map",
+    "main.5d960f85.css.map": "/static/css/main.5d960f85.css.map",
+    "main.fe442860.js.map": "/static/js/main.fe442860.js.map",
     "453.419a5d54.chunk.js.map": "/static/js/453.419a5d54.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4790fb8f.css",
-    "static/js/main.8a5ceaa1.js"
+    "static/css/main.5d960f85.css",
+    "static/js/main.fe442860.js"
   ]
 }
