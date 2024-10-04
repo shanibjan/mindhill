@@ -37,7 +37,7 @@ const CartHeader = () => {
   };
 
   const searchProducts = () => {
-    
+    console.log(searchQuery);
 
     nav("/search", { state: searchQuery });
   };
