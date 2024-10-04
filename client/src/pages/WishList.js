@@ -2,15 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import WishlistHeader from "../components/WishlistHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
-import p11 from "../images/product-11.jpg";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { PostContext } from "../store/postContext";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from '../config';
 
 const WishList = () => {
   const [data, setData] = useState([]);
   console.log(data);
+  console.log(API_URL);
   
 const nav=useNavigate()
 const [a, setA] = useState("");
@@ -19,7 +20,7 @@ const{setPostDetails}=useContext(PostContext)
   const userId = user ? user._id : null;
   const fetchData = async () => {
     try {
-      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`);
+      const res = await axios.get(`${API_URL}/api/v1/product/favorite/${userId}`);
       setData(res.data);
     } catch (error) {
       console.log(error);
@@ -32,7 +33,7 @@ const{setPostDetails}=useContext(PostContext)
   const removeFav=async(productId)=>{
 
     try {
-      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/remove-fav',{userId,productId})
+      const res=await axios.post(`${API_URL}/api/v1/product/remove-fav`,{userId,productId})
       console.log(res.data);
       if(res.data.success){
       
