@@ -11,6 +11,7 @@ import AdminLogin from "./pages/AdminLogin";
 import UserOrdersForAdmin from './pages/UserOrdersForAdmin';
 import UserOrders from "./pages/UserOrders";
 import Search from "./pages/Search";
+import SuccessOrder from "./pages/OrderSuccess";
 
 function App() {
   return (
@@ -57,6 +58,9 @@ function App() {
 
         <Routes>
           <Route Component={Search} path="/search" />
+        </Routes>
+        <Routes>
+          <Route Component={SuccessOrder} path="/success_order" />
         </Routes>
       </Router>
     </div>

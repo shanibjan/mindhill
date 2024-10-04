@@ -37,7 +37,7 @@ const Signup = () => {
       if (valid) {
         console.log("not valid");
       } else {
-        const res = await axios.post("/api/v1/auth/register", {
+        const res = await axios.post("https://mindhill-7.onrender.com/api/v1/auth/register", {
           name,
           email,
           password,

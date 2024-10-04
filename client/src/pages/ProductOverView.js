@@ -39,7 +39,7 @@ const ProductOverView = () => {
 
   const fetchFavoriteList=async()=>{
     try {
-      const res=await axios.get(`api/v1/product/favoritelist/${userId}`)
+      const res=await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favoritelist/${userId}`)
       setFavList(res.data);
       
     } catch (error) {
@@ -53,7 +53,7 @@ const ProductOverView = () => {
   const fetchCartData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -64,7 +64,7 @@ const ProductOverView = () => {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `api/v1/product/get-review/${postDetails._id}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-review/${postDetails._id}`
       );
       setReview(res.data);
     } catch (error) {
@@ -87,12 +87,12 @@ const ProductOverView = () => {
         const updatedQty = qty + item[0].quantity;
 
         const res = await axios.put(
-          `api/v1/product/update-cart/${item[0]._id}`,
+          `https://mindhill-7.onrender.com/api/v1/product/update-cart/${item[0]._id}`,
           { quantity: updatedQty }
         );
         window.alert(res.data.message);
       } else {
-        const res = await axios.post("api/v1/product/add-cart", {
+        const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/add-cart", {
           name: postDetails.name,
           quantity: qty,
           offerPrice: postDetails.offerPrice,
@@ -112,7 +112,7 @@ const ProductOverView = () => {
   const addtoFav=async(productId)=>{
 
     try {
-      const res=await axios.post('api/v1/product/add-fav',{userId,productId})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/add-fav',{userId,productId})
       console.log(res.data);
       if(res.data.success){
        
@@ -130,7 +130,7 @@ const ProductOverView = () => {
   const removeFav=async(productId)=>{
 
     try {
-      const res=await axios.post('api/v1/product/remove-fav',{userId,productId})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/remove-fav',{userId,productId})
       console.log(res.data);
       if(res.data.success){
       

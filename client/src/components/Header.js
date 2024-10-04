@@ -31,7 +31,7 @@ const Header = () => {
   const fetchCartData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const Header = () => {
   const fetchWishList = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/favorite/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`
       );
       setWishList(res.data);
     } catch (error) {
@@ -176,7 +176,7 @@ const Header = () => {
                   </div>
                 )}
 
-                <ul className="dropdown-menu text-[#244262] leading-[35px] max-[1000px]:px-[20px] max-[1000px]:left-[-60px] max-[500px]:left-[-80px] max-[1000px]:w-[150px] ">
+                <ul className="dropdown-menu text-[#244262] leading-[35px] max-[1000px]:px-[20px] max-[1000px]:left-[-60px] max-[550px]:text-[11px] max-[500px]:left-[-80px] max-[1000px]:w-[150px] ">
                   <li
                     onClick={() => {
                       localStorage.removeItem("user");
@@ -189,7 +189,7 @@ const Header = () => {
                   <li onClick={() => nav("/signup")}>
                     {user ? "" : "Register"}
                   </li>
-                  <li onClick={() => nav("/admin")}>Admin</li>
+                  <li onClick={() => nav("/admin_login")}>Admin</li>
                   <li onClick={() => nav("/user_orders")}>
                     {user ? "My orders" : ""}
                   </li>

@@ -18,7 +18,7 @@ const CartHeader = () => {
   const fetchWishList = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/favorite/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`
       );
       setWishList(res.data);
     } catch (error) {
@@ -140,7 +140,7 @@ const CartHeader = () => {
                   <li onClick={() => nav("/signup")}>
                     {user ? "" : "Register"}
                   </li>
-                  <li onClick={() => nav("/admin")}>Admin</li>
+                  
                   <li onClick={() => nav("/user_orders")}>
                     {user ? "My orders" : ""}
                   </li>

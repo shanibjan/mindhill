@@ -6,6 +6,7 @@ import { MongoUnexpectedServerResponseError } from "mongodb";
 import cartModel from "../models/cartModel.js";
 import orderModel from "../models/orderModel.js";
 import orderedUserModel from "../models/orderedUserModel.js";
+import mongoose from "mongoose";
 const router = express.Router();
 
 router.post("/add-product", async (req, res) => {
@@ -163,17 +164,40 @@ router.get("/favoritelist/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
+    // Validate that the userId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    // Find the user by the valid userId
     const user = await userModel.findById(userId);
+
+    // If no user is found, return an error response
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // If the user exists, return the user's product list
     res.status(200).json(user.product);
+    
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: "Server error" });
   }
 });
+
 router.get("/favorite/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
 
     const user = await userModel.findById(userId).populate("product");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     res.status(200).json(user.product);
   } catch (error) {
     console.log(error);

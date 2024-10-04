@@ -33,7 +33,7 @@ const Reviews = (props) => {
   const submit=async()=>{
     try {
       
-      const res=await axios.post('api/v1/product/add-review',{name,email,review:addReview,rating,productId,profile})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/add-review',{name,email,review:addReview,rating,productId,profile})
       console.log(res.data);
       if(res.data.success){
         window.alert(res.data.message)

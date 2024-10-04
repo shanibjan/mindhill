@@ -31,7 +31,7 @@ const AddProducts = ({ }) => {
 
       const create=async()=>{
           try {
-            const res=await axios.post('/api/v1/product/add-product',{name,category,price,offerPrice,rating,img1:image[0].loader,img2:image[1].loader,img3:image[2].loader,img4:image[3].loader})
+            const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/add-product',{name,category,price,offerPrice,rating,img1:image[0].loader,img2:image[1].loader,img3:image[2].loader,img4:image[3].loader})
             console.log(res.data);
             if(res.data.success){
               setImage([])
@@ -49,10 +49,10 @@ const AddProducts = ({ }) => {
       }
   return (
     <div className='my-[10%]' >
-      <h1 className="text-[40px] font-AbrilRegular text-[#244262]">
+      <h1 className="text-[40px] font-AbrilRegular max-[550px]:text-[30px] max-[370px]:text-[25px] text-[#244262]">
           Add Products
         </h1>
-        <div className='w-[50%] mx-auto' >
+        <div className='w-[50%] max-[750px]:w-[80%] max-[500px]:w-[100%] max-[650px]:text-[13px] mx-auto' >
         <input
           className="bg-[#EBF5FF] w-full py-[4%] px-[4%] mb-[2%] "
           type="text"

@@ -25,7 +25,7 @@ const UserOrders = () => {
   const userName = user ? user.name : null;
   const inputRef = useRef(null);
   const fetchorder = async () => {
-    const res = await axios.get(`api/v1/product/get-order/${userId}`);
+    const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/get-order/${userId}`);
     setOrder(res.data);
   };
   order.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -33,7 +33,7 @@ const UserOrders = () => {
   const fetchCartData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -43,7 +43,7 @@ const UserOrders = () => {
   const fetchWishList = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/favorite/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`
       );
       setWishList(res.data);
     } catch (error) {

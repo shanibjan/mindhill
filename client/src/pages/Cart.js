@@ -5,20 +5,21 @@ import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../components/Footer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [radio, setRadio] = useState();
   const [address, setAddress] = useState();
   const [a, setA] = useState("");
   const [data, setData] = useState([]);
-
+const nav=useNavigate()
   const user = JSON.parse(localStorage.getItem("user"));
 
   const userId = user ? user._id : null;
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        `/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -42,7 +43,7 @@ const Cart = () => {
       } else {
         quantity -= 1;
       }
-      await axios.put(`api/v1/product/update-cart/${cartId}`, { quantity });
+      await axios.put(`https://mindhill-7.onrender.com/api/v1/product/update-cart/${cartId}`, { quantity });
 
       fetchData();
     } catch (error) {}
@@ -50,7 +51,7 @@ const Cart = () => {
 
   const deleteCart = async (cartId) => {
     try {
-      await axios.delete(`api/v1/product/delete-cart/${cartId}`);
+      await axios.delete(`https://mindhill-7.onrender.com/api/v1/product/delete-cart/${cartId}`);
       fetchData();
     } catch (error) {
       console.log(error);
@@ -118,7 +119,7 @@ const Cart = () => {
       console.log(paymentId);
 
       if (paymentId || radio === "COD") {
-        const res = await axios.post("api/v1/product/create-order", {
+        const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/create-order", {
           userId,
           address,
           bill: total + 50,
@@ -127,11 +128,13 @@ const Cart = () => {
         console.log(res.data);
 
         if (res.data.success) {
-          window.alert(res.data.message);
+         
+          nav('/success_order')
+          
         }
 
         const response = await axios.post(
-          "api/v1/product/create-ordered-users",
+          "https://mindhill-7.onrender.com/api/v1/product/create-ordered-users",
           { userId }
         );
         console.log(response);

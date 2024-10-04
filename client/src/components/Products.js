@@ -26,7 +26,7 @@ const Products = () => {
   const userId=user?user._id:null
   const fetchFavoriteList=async()=>{
     try {
-      const res=await axios.get(`api/v1/product/favoritelist/${userId}`)
+      const res=await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favoritelist/${userId}`)
       setFavList(res.data);
       
     } catch (error) {
@@ -80,7 +80,7 @@ const Products = () => {
   const addtoFav=async(productId)=>{
 
     try {
-      const res=await axios.post('api/v1/product/add-fav',{userId,productId})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/add-fav',{userId,productId})
       console.log(res.data);
       if(res.data.success){
        
@@ -98,7 +98,7 @@ const Products = () => {
   const removeFav=async(productId)=>{
 
     try {
-      const res=await axios.post('api/v1/product/remove-fav',{userId,productId})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/remove-fav',{userId,productId})
       console.log(res.data);
       if(res.data.success){
       

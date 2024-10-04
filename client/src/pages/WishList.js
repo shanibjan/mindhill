@@ -19,7 +19,7 @@ const{setPostDetails}=useContext(PostContext)
   const userId = user ? user._id : null;
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:7000/api/v1/product/favorite/${userId}`);
+      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`);
       setData(res.data);
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ const{setPostDetails}=useContext(PostContext)
   const removeFav=async(productId)=>{
 
     try {
-      const res=await axios.post('api/v1/product/remove-fav',{userId,productId})
+      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/remove-fav',{userId,productId})
       console.log(res.data);
       if(res.data.success){
       

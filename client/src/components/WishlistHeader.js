@@ -16,7 +16,7 @@ const WishlistHeader = () => {
   const fetchCartData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -135,7 +135,7 @@ const WishlistHeader = () => {
                   <li onClick={() => nav("/signup")}>
                     {user ? "" : "Register"}
                   </li>
-                  <li onClick={() => nav("/admin")}>Admin</li>
+                 
                   <li onClick={() => nav("/user_orders")}>
                     {user ? "My orders" : ""}
                   </li>

@@ -9,7 +9,7 @@ const ManageUserOrders = () => {
   
   const nav=useNavigate()
   const fetchorder=async()=>{
-    const res=await axios.get(`api/v1/product/get-ordered-users`)
+    const res=await axios.get(`https://mindhill-7.onrender.com/api/v1/product/get-ordered-users`)
     setOrder(res.data[0].users);
     
    

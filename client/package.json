@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "proxy": "https://mindhill-7.onrender.com",
+  
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
     "owl.carousel": "^2.3.4",
     "postcss": "^8.4.47",
     "react": "^18.3.1",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.3.1",
     "react-fontawesome": "^1.7.1",
     "react-owl-carousel": "^2.3.3",

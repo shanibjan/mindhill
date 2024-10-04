@@ -17,7 +17,7 @@ const Login = () => {
 
     const login=async()=>{
       try {
-        const res=await axios.post('/api/v1/auth/login',{email,password})
+        const res=await axios.post('https://mindhill-7.onrender.com/api/v1/auth/login',{email,password})
           console.log(res.data);
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -29,6 +29,8 @@ const Login = () => {
         }
         
       } catch (error) {
+        console.log(error);
+        
         window.alert(error.response.data.message);
       }
   }

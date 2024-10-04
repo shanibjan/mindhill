@@ -22,6 +22,7 @@ const Search = ({}) => {
   const [wishlist, setWishList] = useState([]);
   
   const [products, setProducts] = useState([]);
+  console.log(products);
   
   
   const [a, setA] = useState("");
@@ -43,7 +44,7 @@ const Search = ({}) => {
   const fetchCartData = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/get-cart/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
       setData(res.data);
     } catch (error) {
@@ -53,7 +54,7 @@ const Search = ({}) => {
   const fetchWishList = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:7000/api/v1/product/favorite/${userId}`
+        `https://mindhill-7.onrender.com/api/v1/product/favorite/${userId}`
       );
       setWishList(res.data);
     } catch (error) {
@@ -67,13 +68,13 @@ const Search = ({}) => {
 
   const fetchSearch = async () => {
     try {
-      const res = await axios.get(`api/v1/product/search?q=${searchQuery||location.state}`);
+      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/search?q=${searchQuery||location.state}`);
       setProducts(res.data);
     } catch (error) {}
   };
   const fetchFavoriteList = async () => {
     try {
-      const res = await axios.get(`api/v1/product/favoritelist/${userId}`);
+      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favoritelist/${userId}`);
       setFavList(res.data);
     } catch (error) {
       console.log(error);
@@ -90,7 +91,7 @@ const Search = ({}) => {
   const star = ["☆", "☆", "☆", "☆", "☆"];
   const addtoFav = async (productId) => {
     try {
-      const res = await axios.post("api/v1/product/add-fav", {
+      const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/add-fav", {
         userId,
         productId,
       });
@@ -104,7 +105,7 @@ const Search = ({}) => {
   };
   const removeFav = async (productId) => {
     try {
-      const res = await axios.post("api/v1/product/remove-fav", {
+      const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/remove-fav", {
         userId,
         productId,
       });
@@ -124,14 +125,14 @@ const Search = ({}) => {
   setTimeout(() => {
     setA("Sorry, no products matched your criteria.");
   }, 500);
-  console.log(a);
+  
 
   return (
     <div>
        
        
       <div
-        className="overflow-visible py-[3%] px-[4%] bg-cover bg fixed w-full mt-[-10%] z-10 "
+        className="overflow-visible py-[3%] px-[4%] bg-cover bg  w-full  z-10 "
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${productOverView}) center/cover`,
         }}
@@ -152,48 +153,48 @@ const Search = ({}) => {
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-[90%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
+                    className="w-[90%] max-[800px]:w-[75%] max-[500px]:w-[70%] max-[550px]:text-[15px] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
                   />
 
                   <div
                     onClick={searchProducts}
-                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white"
+                    className="bg-[#244262] rounded-[50%] w-[40px]  max-[550px]:w-[30px] max-[550px]:h-[30px] h-[40px] flex justify-center items-center text-white"
                   >
-                    <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
 
                   <div
                     onClick={() => setIsSearchVisible((prev) => !prev)}
-                    className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white ml-[3%]"
+                    className="bg-[#244262] rounded-[50%] w-[40px]  max-[550px]:w-[30px] max-[550px]:h-[30px] h-[40px] flex justify-center items-center text-white ml-[3%]"
                   >
-                    <FontAwesomeIcon icon={faTimes} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faTimes} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <div className="flex justify-between text-white items-center">
+          <div className="flex justify-between text-white items-center max-[600px]:block">
             <div onClick={() => nav("/")}>
-              <h2 className="font-AbrilRegular text-[40px] cursor-pointer">
+              <h2 className="font-AbrilRegular text-[40px] cursor-pointer max-[600px]:mb-[6%]">
                 MIND HILL
               </h2>
             </div>
-            <div className="flex justify-between w-[30%] max-lg:w-[50%] items-center font-gorditaMedium cursor-pointer">
+            <div className="flex justify-between w-[30%] max-lg:w-[50%]  max-[600px]:w-full items-center font-gorditaMedium cursor-pointer">
               <div
                 onClick={janu}
-                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center"
+                className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center"
               >
-                <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
               </div>
 
               <div
                 onClick={() => {
                   user ? nav("/wishlist") : window.alert("Please Login");
                 }}
-                className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+                className="bg-[#244262] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center relative"
               >
-                <FontAwesomeIcon icon={faHeart} className="h-[23px]" />
+                <FontAwesomeIcon icon={faHeart} className="h-[23px] max-[550px]:h-[15px]" />
                 <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
                   {user ? wishlist.length : "0"}
                 </h1>
@@ -202,9 +203,9 @@ const Search = ({}) => {
                 onClick={() => {
                   user ? nav("/cart") : window.alert("Please Login");
                 }}
-                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center relative"
+                className="bg-[#94C4F7] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center relative"
               >
-                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px]" />
+                <FontAwesomeIcon icon={faShoppingBasket} className="h-[23px] max-[550px]:h-[15px]" />
                 <h1 className="absolute right-[-15%] bottom-[-20%] bg-white text-[#244262] w-[25px] h-[25px] rounded-[50%] p-[5%]">
                   {user ? data.length : "0"}
                 </h1>
@@ -219,12 +220,12 @@ const Search = ({}) => {
                     />
                   </div>
                 ) : (
-                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] flex justify-center items-center ">
-                    <FontAwesomeIcon icon={faUser} className="h-[23px]" />
+                  <div className="bg-[#FFA27E] rounded-[50%] w-[50px] h-[50px] max-[550px]:w-[40px] max-[550px]:h-[40px] flex justify-center items-center ">
+                    <FontAwesomeIcon icon={faUser} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 )}
 
-                <ul className="dropdown-menu text-[#244262] leading-[35px] ">
+                <ul className="dropdown-menu text-[#244262] leading-[35px] max-[1000px]:px-[20px] max-[550px]:text-[11px] max-[1000px]:left-[-60px] max-[500px]:left-[-77px] max-[1000px]:w-[130px] ">
                   <li
                     onClick={() => {
                       localStorage.removeItem("user");
@@ -248,9 +249,9 @@ const Search = ({}) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] gap-12 mt-[10%]">
         {products.length > 0 ? (
-          products.map((product) => {
+      <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] gap-12 ">
+          {products.map((product) => {
             return (
               <div
                 style={{
@@ -322,13 +323,14 @@ const Search = ({}) => {
                 </div>
               </div>
             );
-          })
+          })}
+          </div>
         ) : (
-          <div className="font-AbrilRegular text-[23px] text-[#244262] w-[1330px]">
+          <div className="font-AbrilRegular text-[23px] max-[550px]:text-[13px] text-[#244262] ">
             {a}
           </div>
         )}
-      </div>
+      
     </div>
   );
 };
