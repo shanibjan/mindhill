@@ -10,12 +10,7 @@ import { fileURLToPath } from "url";
 
 
 dotenv.config();
-
-//database confg
-connectDB();
-
 const app = express()
-
 const corsOptions = {
   origin: 'https://mindhill-8.onrender.com', // Your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
@@ -23,6 +18,14 @@ const corsOptions = {
   optionsSuccessStatus: 200 // For legacy browsers
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
+//database confg
+connectDB();
+
+
+
+
 app.use(express.json({ limit: '10mb' })); 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
