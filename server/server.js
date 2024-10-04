@@ -44,6 +44,16 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, '..',"client", "build", "index.html"));
 });
 
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, '..', 'client', 'build', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('Not Found');
+  }
+});
+
+
 
 
 
