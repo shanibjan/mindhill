@@ -30,7 +30,7 @@ function App() {
         </Routes>
 
         <Routes>
-          <Route Component={WishList} path="/wishlist" />
+          <Route Component={WishList} path="https://mindhill-8.onrender.com/wishlist" />
         </Routes>
 
         <Routes>
