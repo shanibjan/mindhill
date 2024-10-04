@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const AdminProducts = ({ }) => {
   const [products,setProducts]=useState([])
-  console.log(products);
+  
   
 
   const fetchData = async () => {
