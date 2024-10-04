@@ -8,7 +8,7 @@ const AddProducts = ({ }) => {
     const[price,setPrice]=useState()
     const[offerPrice,setOfferPrice]=useState()
     const[rating,setRating]=useState()
-    console.log(image);
+    
     
    
     
