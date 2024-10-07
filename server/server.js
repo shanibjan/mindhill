@@ -32,13 +32,14 @@ const __dirname = path.dirname(__filename);
 
 
 
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/payment',paymentRoute);
 // Serve static files from the public directory (development only)
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
