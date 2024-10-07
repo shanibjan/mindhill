@@ -38,17 +38,10 @@ app.use('/api/v1/product',productRoute);
 app.use('/api/v1/payment',paymentRoute);
 // Serve static files from the public directory (development only)
 
-app.use(express.static(path.join(__dirname, '..',"client", "build")));
-
-
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '..', 'client', 'build', 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send('Not Found');
-  }
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 
 
