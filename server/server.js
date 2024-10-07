@@ -7,7 +7,6 @@ import productRoute from './routes/productRoute.js'
 import paymentRoute from './routes/paymentRoute.js'
 import path from "path";
 import { fileURLToPath } from "url";
-import Cart from "../client/src/pages/Cart.js";
 
 
 dotenv.config();
@@ -37,7 +36,6 @@ const __dirname = path.dirname(__filename);
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/payment',paymentRoute);
-
 // Serve static files from the public directory (development only)
 
 app.use(express.static(path.join(__dirname, '..',"client", "build")));
