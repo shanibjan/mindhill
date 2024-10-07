@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 const Products = () => {
   const [bgColor, setBgColor] = useState("Show All");
   const [products,setProducts]=useState([])
+ console.log(products);
  
   
   const nav=useNavigate()
