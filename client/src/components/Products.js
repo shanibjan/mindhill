@@ -130,9 +130,7 @@ const Products = () => {
           </p>
         </div>
         <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 px-[4%] max-[450px]:px-[10%] gap-y-10 ">
-        {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
-        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
-      </div>:null}
+       
           {productIcons.map((icon, index) => {
             return (
               <div
@@ -157,6 +155,9 @@ const Products = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] max-[450px]:p-[10%] gap-12 ">
+      {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
 
         { bgColor==="Show All" ?(products.map((product) => {
           return (
