@@ -13,7 +13,7 @@ const AdminLogin = () => {
 
       const login=()=>{
           if(email==="admin"&&password==="1"){
-            nav('/admin')
+            nav('/admin',{state:{email:"admin",password:"1"}})
           }else{
             window.alert("invalid details")
           }

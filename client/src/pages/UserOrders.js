@@ -200,7 +200,7 @@ const UserOrders = () => {
                   <li onClick={() => nav("/signup")}>
                     {user ? "" : "Register"}
                   </li>
-                  <li onClick={() => nav("/admin")}>Admin</li>
+                 
                   <li onClick={() => nav("/user_orders")}>
                     {user ? "My orders" : ""}
                   </li>
