@@ -6,12 +6,15 @@ import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import Footer from "../components/Footer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import loading from '../images/buffering-colors.gif'
 
 const Cart = () => {
   const [radio, setRadio] = useState();
   const [address, setAddress] = useState();
   const [a, setA] = useState("");
   const [data, setData] = useState([]);
+  const [isLoading,setIsLoading]=useState(true)
+
 const nav=useNavigate()
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -21,7 +24,13 @@ const nav=useNavigate()
       const res = await axios.get(
         `https://mindhill-7.onrender.com/api/v1/product/get-cart/${userId}`
       );
-      setData(res.data);
+      if(res){
+        setData(res.data);
+        setIsLoading(false)
+      }else{
+        setIsLoading(false)
+        setData([])
+      }
     } catch (error) {
       console.log(error);
     }
@@ -156,6 +165,9 @@ const nav=useNavigate()
   return (
     <div>
       <CartHeader />
+      {isLoading? <div>
+        <img src={loading} alt="" className="mx-auto" />
+      </div>:null}
       {data.length > 0 ? (
         <div>
           <div className="px-[10%] py-[5%]">
@@ -332,9 +344,9 @@ const nav=useNavigate()
             </div>
           </div>
         </div>
-      ) : (
+      ) : isLoading===false? (
         <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%]"  >{a}</div>
-      )}
+      ):null}
 
       <Footer />
     </div>
