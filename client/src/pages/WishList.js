@@ -7,11 +7,13 @@ import axios from "axios";
 import { PostContext } from "../store/postContext";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from '../config';
+import loading from '../images/buffering-colors.gif'
+
 
 const WishList = () => {
   const [data, setData] = useState([]);
-  console.log(data);
-  console.log(API_URL);
+  const [isLoading,setIsLoading]=useState(true)
+ 
   
 const nav=useNavigate()
 const [a, setA] = useState("");
@@ -21,7 +23,13 @@ const{setPostDetails}=useContext(PostContext)
   const fetchData = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/v1/product/favorite/${userId}`);
-      setData(res.data);
+      if(res){
+        setData(res.data);
+        setIsLoading(false)
+      }else{
+        setIsLoading(false)
+        setData([])
+      }
     } catch (error) {
       console.log(error);
     }
@@ -50,10 +58,13 @@ const{setPostDetails}=useContext(PostContext)
   setTimeout(() => {
     setA("Sorry, your wishlist is empty");
   }, 500);
-  console.log(a);
+ 
   return (
     <div>
       <WishlistHeader />
+      {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
       {data.length>0?(
         <div className="px-[10%] py-[5%] ">
         <div className="flex justify-between text-left py-[1%] text-[20px] max-[550px]:text-[15px] font-AbrilRegular text-[#244262] items-center ">
@@ -103,7 +114,9 @@ const{setPostDetails}=useContext(PostContext)
               </div>
             </div>
           );
-        })} </div>):(<h2 className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%]" >{a}</h2>)}
+        })} </div>): isLoading===false? (
+          <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
+        ):null}
       
      
       <Footer />

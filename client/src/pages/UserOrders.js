@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import productOverView from "../images/product-overview.jpg";
+import loading from '../images/buffering-colors.gif'
 
 const UserOrders = () => {
   const [order, setOrder] = useState([]);
@@ -20,13 +21,21 @@ const UserOrders = () => {
   const [searchQuery, setsearchQuery] = useState("");
   const [wishlist, setWishList] = useState([]);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [a, setA] = useState("");
+  const [isLoading,setIsLoading]=useState(true)
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
   const userName = user ? user.name : null;
   const inputRef = useRef(null);
   const fetchorder = async () => {
     const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/get-order/${userId}`);
-    setOrder(res.data);
+    if(res){
+      setOrder(res.data);
+      setIsLoading(false)
+    }else{
+      setIsLoading(false)
+      setOrder([])
+    }
   };
   order.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -205,7 +214,11 @@ const UserOrders = () => {
       <h1 className="font-AbrilRegular text-[#244262] text-[40px]  max-[550px]:text-[30px] max-[370px]:text-[25px]  my-[5%]">
         User Orders
       </h1>
-      <div className="px-[3%]">
+      {isLoading? <div className="h-[400px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
+      {order.length>0?(
+        <div className="px-[3%]">
         <div>
           <h2 className="font-gorditaMedium">User:{userName}</h2>
           <div>
@@ -280,6 +293,9 @@ const UserOrders = () => {
           </div>
         </div>
       </div>
+      ): isLoading===false? (
+        <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
+      ):null}
     </div>
   );
 };

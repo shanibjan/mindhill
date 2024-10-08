@@ -165,8 +165,8 @@ const nav=useNavigate()
   return (
     <div>
       <CartHeader />
-      {isLoading? <div>
-        <img src={loading} alt="" className="mx-auto" />
+      {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
       </div>:null}
       {data.length > 0 ? (
         <div>
@@ -345,7 +345,7 @@ const nav=useNavigate()
           </div>
         </div>
       ) : isLoading===false? (
-        <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%]"  >{a}</div>
+        <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
       ):null}
 
       <Footer />

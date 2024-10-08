@@ -44,7 +44,7 @@ const CartHeader = () => {
   return (
     <div>
       <div
-        className="overflow-hidden max-[550px]:overflow-visible py-[3%] px-[4%] bg-cover bg"
+        className="overflow-hidden max-[550px]:overflow-visible py-[3%] px-[4%] bg-cover bg mb-[4%]"
         style={{
           background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${cart}) center/cover`,
         }}
