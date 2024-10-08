@@ -137,8 +137,10 @@ const nav=useNavigate()
         console.log(res.data);
 
         if (res.data.success) {
-         
+         setTimeout(()=>{
           nav('/success_order')
+         },600)
+         
           
         }
 

@@ -79,7 +79,7 @@ const ProductHeader = () => {
                     placeholder="Search products"
                     value={searchQuery}
                     onChange={(e) => setsearchQuery(e.target.value)}
-                    className="w-[90%] max-[800px]:w-[75%] max-[500px]:w-[70%] h-[70px]  text-[20px] text-[#244262] font-gorditaRegular outline-none"
+                    className="w-[90%] max-[800px]:w-[75%] max-[500px]:w-[70%] h-[70px]  text-[20px] max-[550px]:text-[15px]  text-[#244262] font-gorditaRegular outline-none"
                   />
 
                   <div

@@ -9,7 +9,7 @@ import {
 import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PostContext } from "../store/postContext";
 import productOverView from "../images/product-overview.jpg";
@@ -29,7 +29,7 @@ const Search = ({}) => {
   const nav = useNavigate();
   const [favList, setFavList] = useState([]);
   const { setPostDetails } = useContext(PostContext);
-
+  const inputRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -125,7 +125,11 @@ const Search = ({}) => {
   setTimeout(() => {
     setA("Sorry, no products matched your criteria.");
   }, 500);
-  
+  useEffect(() => {
+    if (isSearchVisible && inputRef.current) {
+      inputRef.current.focus(); // Focus on the input when it is displayed
+    }
+  }, [isSearchVisible]);
 
   return (
     <div>
@@ -149,6 +153,7 @@ const Search = ({}) => {
               >
                 <div className="flex items-center bg-white px-[3%]">
                   <input
+                   ref={inputRef}
                     type="text"
                     placeholder="Search products"
                     value={searchQuery}

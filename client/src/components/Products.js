@@ -11,10 +11,12 @@ import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
 import axios from 'axios'
 import { PostContext } from "../store/postContext";
 import { useNavigate } from "react-router-dom";
+import loading from '../images/buffering-colors.gif'
 
 const Products = () => {
   const [bgColor, setBgColor] = useState("Show All");
   const [products,setProducts]=useState([])
+  const [isLoading,setIsLoading]=useState(true)
  console.log(products);
  
   
@@ -62,6 +64,7 @@ const Products = () => {
         'https://mindhill-7.onrender.com/api/v1/product/get-product/'
       );
       setProducts(response.data);
+      setIsLoading(false)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -127,6 +130,9 @@ const Products = () => {
           </p>
         </div>
         <div className="grid grid-cols-6 max-md:grid-cols-3 max-sm:grid-cols-2 px-[4%] max-[450px]:px-[10%] gap-y-10 ">
+        {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
           {productIcons.map((icon, index) => {
             return (
               <div
