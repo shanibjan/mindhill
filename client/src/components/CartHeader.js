@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBasket, faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
@@ -11,7 +11,7 @@ const CartHeader = () => {
   const userId = user ? user._id : null;
   const [wishlist, setWishList] = useState([]);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
- 
+  const inputRef = useRef(null);
   const [searchQuery, setsearchQuery] = useState("");
 
   
@@ -41,6 +41,12 @@ const CartHeader = () => {
 
     nav("/search", { state: searchQuery });
   };
+
+  useEffect(() => {
+    if (isSearchVisible && inputRef.current) {
+      inputRef.current.focus(); // Focus on the input when it is displayed
+    }
+  }, [isSearchVisible]);
   return (
     <div>
       <div
@@ -61,6 +67,7 @@ const CartHeader = () => {
               >
                 <div className="flex items-center justify-between bg-white px-[3%]">
                   <input
+                   ref={inputRef}
                     type="text"
                     placeholder="Search products"
                     value={searchQuery}
