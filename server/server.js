@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 dotenv.config();
 const app = express()
 const corsOptions = {
-  origin: 'https://mindhill-8.onrender.com', // Your frontend URL
+  origin: true, // Your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
   credentials: true, // Allow cookies to be sent
   optionsSuccessStatus: 200 // For legacy browsers
