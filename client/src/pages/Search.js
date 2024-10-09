@@ -14,13 +14,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { PostContext } from "../store/postContext";
 import productOverView from "../images/product-overview.jpg";
 import { motion, AnimatePresence } from "framer-motion";
-import WishlistHeader from "../components/WishlistHeader";
+import loading from '../images/buffering-colors.gif'
 
 const Search = ({}) => {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [wishlist, setWishList] = useState([]);
-  
+  const [isLoading,setIsLoading]=useState(true)
   const [products, setProducts] = useState([]);
   console.log(products);
   
@@ -69,7 +69,13 @@ const Search = ({}) => {
   const fetchSearch = async () => {
     try {
       const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/search?q=${searchQuery||location.state}`);
-      setProducts(res.data);
+      if(res){
+        setProducts(res.data);
+        setIsLoading(false)
+      }else{
+        setIsLoading(false)
+        setProducts([])
+      }
     } catch (error) {}
   };
   const fetchFavoriteList = async () => {
@@ -253,6 +259,9 @@ const Search = ({}) => {
           </div>
         </div>
       </div>
+      {isLoading? <div className="h-[400px] max-[450px]:h-[300px]">
+        <img src={loading} alt="" className="mx-auto max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
 
         {products.length > 0 ? (
       <div className="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 p-[4%] gap-12 ">
@@ -330,11 +339,9 @@ const Search = ({}) => {
             );
           })}
           </div>
-        ) : (
-          <div className="font-AbrilRegular text-[23px] max-[550px]:text-[13px] text-[#244262] ">
-            {a}
-          </div>
-        )}
+        ) : isLoading===false? (
+          <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
+        ):null}
       
     </div>
   );

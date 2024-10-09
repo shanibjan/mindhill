@@ -79,7 +79,7 @@ const nav=useNavigate()
           window.alert("Fill address");
         } else {
           const { data: order } = await axios.post(
-            "api/v1/payment/create-payment",
+            "https://mindhill-7.onrender.com/api/v1/payment/create-payment",
             {
               amount: (total + 50) * 100, // e.g., 50000 paise = ₹500
             }
