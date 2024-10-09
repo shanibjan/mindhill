@@ -9,9 +9,9 @@ import {
 import { faEye, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PostContext } from "../store/postContext";
+
 import productOverView from "../images/product-overview.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 import loading from '../images/buffering-colors.gif'
@@ -28,7 +28,7 @@ const Search = ({}) => {
   const [a, setA] = useState("");
   const nav = useNavigate();
   const [favList, setFavList] = useState([]);
-  const { setPostDetails } = useContext(PostContext);
+ 
   const inputRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
@@ -278,8 +278,7 @@ const Search = ({}) => {
                       </div> */}
                 <div
                   onClick={() => {
-                    setPostDetails(product);
-                    nav("/overview");
+                    nav(`/${product._id}`)
                   }}
                   className="h-[77%]"
                 ></div>
