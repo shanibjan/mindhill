@@ -27,12 +27,10 @@ connectDB();
 
 
 app.use(express.json({ limit: '10mb' })); 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 
 
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
 
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
@@ -41,13 +39,9 @@ app.use('/api/v1/payment',paymentRoute);
 
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
-});
 
-app.get('/cart', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
-});
+
+
 
 
 
