@@ -35,7 +35,20 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/product',productRoute);
 app.use('/api/v1/payment',paymentRoute);
-// Serve static files from the public directory (development only)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the React build folder
+  app.use(express.static(path.join(__dirname, '..', 'client','public'))); // Assuming your build folder is 'public'
+
+  // For any other route, serve index.html (React SPA)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client','public', 'index.html'));
+  });
+}
+
 
 
 
