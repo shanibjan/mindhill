@@ -108,7 +108,7 @@ const{setPostDetails}=useContext(PostContext)
                 <h4>In stock</h4>
               </div>
               <div className="w-[20%] max-[430px]:w-[25%]">
-                <button onClick={()=>{setPostDetails(items);nav('/overview')}} className="bg-[#94C4F7] py-[5%] px-[10%] font-gorditaBold text-[12px] max-[430px]:w-[100%] max-[430px]:text-[8px] tracking-[2px]  text-white">
+                <button onClick={()=>{nav(`/${items._id}`)}} className="bg-[#94C4F7] py-[5%] px-[10%] font-gorditaBold text-[12px] max-[430px]:w-[100%] max-[430px]:text-[8px] tracking-[2px]  text-white">
                  VIEW DETAILS
                 </button>
               </div>

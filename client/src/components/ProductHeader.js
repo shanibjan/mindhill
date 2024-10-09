@@ -86,14 +86,14 @@ const ProductHeader = () => {
                     onClick={searchProducts}
                     className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white"
                   >
-                    <FontAwesomeIcon icon={faSearch} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faSearch} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
 
                   <div
                     onClick={() => setIsSearchVisible((prev) => !prev)}
                     className="bg-[#244262] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center text-white ml-[3%]"
                   >
-                    <FontAwesomeIcon icon={faTimes} className="h-[23px]" />
+                    <FontAwesomeIcon icon={faTimes} className="h-[23px] max-[550px]:h-[15px]" />
                   </div>
                 </div>
               </motion.div>

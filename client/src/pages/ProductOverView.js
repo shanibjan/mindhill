@@ -1,7 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import ProductHeader from "../components/ProductHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faAngleDown,faHeart as faHeartSolid  } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleUp,
+  faAngleDown,
+  faHeart as faHeartSolid,
+} from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import {
   faFacebook,
@@ -13,42 +17,59 @@ import {
 
 import Reviews from "../components/Reviews";
 import Footer from "../components/Footer";
-import { PostContext } from "../store/postContext";
-import { useLocation } from "react-router-dom";
+import loading from '../images/buffering-colors.gif'
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ProductOverView = () => {
+  const { productId } = useParams();
+  const [a, setA] = useState("");
+  const [isLoading,setIsLoading]=useState(true)
   const [image, setImage] = useState();
   const [qty, setQty] = useState(1);
   const [review, setReview] = useState([]);
+
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user ? user._id : null;
   const [data, setData] = useState([]);
-  const[favList,setFavList]=useState([])
-  console.log(favList);
+  const [favList, setFavList] = useState([]);
+  const [productData, setProductData] = useState([]);
   
-
+  
   const [bg, setBg] = useState("Description");
   const stars = ["✩", "✩", "✩", "✩", "✩"];
   const { pathname } = useLocation();
-  const { postDetails } = useContext(PostContext);
+ 
+
+  useEffect(() => {
+    // Fetch product data from the API
+    fetch(`https://mindhill-7.onrender.com/api/v1/product/overview/${productId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        if(data){
+          setProductData(data)
+          setIsLoading(false)
+        }else{
+          setProductData([])
+          setIsLoading(false)
+        }
+       
+      })
+      .catch((error) => console.error("Error fetching product data:", error));
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, window.innerHeight / 2);
   }, [pathname]);
 
-  const fetchFavoriteList=async()=>{
+  const fetchFavoriteList = async () => {
     try {
-      const res=await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favoritelist/${userId}`)
+      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/favoritelist/${userId}`);
       setFavList(res.data);
-      
     } catch (error) {
       console.log(error);
-      
     }
-  }
-
- 
+  };
 
   const fetchCartData = async () => {
     try {
@@ -63,9 +84,8 @@ const ProductOverView = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(
-        `https://mindhill-7.onrender.com/api/v1/product/get-review/${postDetails._id}`
-      );
+      const res = await axios.get(`https://mindhill-7.onrender.com/api/v1/product/get-review/${productId}`);
+
       setReview(res.data);
     } catch (error) {
       console.log(error);
@@ -74,13 +94,13 @@ const ProductOverView = () => {
   useEffect(() => {
     fetchData();
     fetchCartData();
-    fetchFavoriteList()
+    fetchFavoriteList();
   }, []);
 
-  const addtoCart = async () => {
+  const addtoCart = async (product) => {
     try {
       const item = data.filter((items) => {
-        return items.product === postDetails._id;
+        return items.product === product._id
       });
 
       if (item.length > 0) {
@@ -93,12 +113,12 @@ const ProductOverView = () => {
         window.alert(res.data.message);
       } else {
         const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/add-cart", {
-          name: postDetails.name,
+          name: product.name,
           quantity: qty,
-          offerPrice: postDetails.offerPrice,
-          img1: postDetails.img1,
+          offerPrice: product.offerPrice,
+          img1: product.img1,
           userId,
-          productId: postDetails._id,
+          productId: product._id,
         });
         console.log(res.data);
         window.alert(res.data.message);
@@ -109,49 +129,58 @@ const ProductOverView = () => {
     }
   };
 
-  const addtoFav=async(productId)=>{
-
+  const addtoFav = async (productId) => {
     try {
-      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/add-fav',{userId,productId})
+      const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/add-fav", {
+        userId,
+        productId,
+      });
       console.log(res.data);
-      if(res.data.success){
-       
-        fetchFavoriteList()
-    
+      if (res.data.success) {
+        fetchFavoriteList();
       }
-      
     } catch (error) {
+      console.log(error);
+
       window.alert(error.response.data.message);
-      
     }
-  }
+  };
 
-
-  const removeFav=async(productId)=>{
-
+  const removeFav = async (productId) => {
     try {
-      const res=await axios.post('https://mindhill-7.onrender.com/api/v1/product/remove-fav',{userId,productId})
+      const res = await axios.post("https://mindhill-7.onrender.com/api/v1/product/remove-fav", {
+        userId,
+        productId,
+      });
       console.log(res.data);
-      if(res.data.success){
-      
-        fetchFavoriteList()
-    
+      if (res.data.success) {
+        fetchFavoriteList();
       }
-      
     } catch (error) {
       window.alert(error.response.data.error);
-      
     }
-  }
+  };
 
+  const logos = [
+    { logo: faFacebook },
+    { logo: faInstagram },
+    { logo: faLinkedin },
+    { logo: faPinterest },
+    { logo: faTwitter },
+  ];
 
-  const logos=[
-    {logo:faFacebook},{logo:faInstagram},{logo:faLinkedin},{logo:faPinterest},{logo:faTwitter}
-  ]
+  setTimeout(() => {
+    setA("Sorry, No products matching");
+  }, 500);
   return (
     <div>
       <ProductHeader />
-      <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-x-16 py-[5%] px-[10%]">
+      {isLoading? <div className="h-[400px] max-[450px]:h-[300px] flex justify-center items-center">
+        <img src={loading} alt="" className="mx-auto h-[100px] max-[550px]:h-[50px] max-[400px]:h-[25px]" />
+      </div>:null}
+      {productData.length>0 ? productData.map((postDetails)=>{
+        return(
+          <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-x-16 py-[5%] px-[10%]">
         <div className="grid grid-row-2">
           <div className="h-full">
             <img
@@ -233,18 +262,33 @@ const ProductOverView = () => {
                 </div>
               </div>
               <button
-                onClick={addtoCart}
+                onClick={()=>addtoCart(postDetails)}
                 className="bg-[#94C4F7] py-[1%] px-[3%] font-gorditaMedium text-white"
               >
                 ADD TO CART
               </button>
             </div>
             <div className="flex items-center my-[5%] ">
-            <div  className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center cursor-pointer mr-[4%] text-white">
-                      {favList.includes(postDetails._id)?(<FontAwesomeIcon onClick={()=>removeFav(postDetails._id)}  icon={faHeartSolid} className="h-[18px] " />):(<FontAwesomeIcon onClick={()=>addtoFav(postDetails._id)} icon={faHeart} className="h-[18px] " />)}
-                      
-                    </div>
-              <h4 className="font-gorditaRegular">{favList.includes(postDetails._id)?"Remove from Wishlist":"Add to Wishlist"}</h4>
+              <div className="bg-[#FFA27E] rounded-[50%] w-[40px] h-[40px] flex justify-center items-center cursor-pointer mr-[4%] text-white">
+                {favList.includes(postDetails._id) ? (
+                  <FontAwesomeIcon
+                    onClick={() => removeFav(postDetails._id)}
+                    icon={faHeartSolid}
+                    className="h-[18px] "
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    onClick={() => addtoFav(postDetails._id)}
+                    icon={faHeart}
+                    className="h-[18px] "
+                  />
+                )}
+              </div>
+              <h4 className="font-gorditaRegular">
+                {favList.includes(postDetails._id)
+                  ? "Remove from Wishlist"
+                  : "Add to Wishlist"}
+              </h4>
             </div>
             <div className="leading-[50px] text-[#244262] ">
               <div className="flex items-baseline">
@@ -266,21 +310,27 @@ const ProductOverView = () => {
                   Share:
                 </h3>
                 <div className="flex justify-between w-[50%] max-[550px]:w-[80%] text-white ">
-                  {logos.map((logo)=>{
-                    return(
+                  {logos.map((logo) => {
+                    return (
                       <div className="bg-[#94C4F7] rounded-[50%] w-[40px]  h-[40px] max-[350px]:w-[30px] max-[350px]:h-[30px] flex justify-center items-center">
-                      <FontAwesomeIcon icon={logo.logo} className="h-[18px] " />
-                    </div>
-                    )
+                        <FontAwesomeIcon
+                          icon={logo.logo}
+                          className="h-[18px] "
+                        />
+                      </div>
+                    );
                   })}
-                 
-                  
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+        )
+      }): isLoading===false? (
+        <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
+      ):null}
+      
       <div>
         <div className="grid grid-cols-3 max-md:grid-cols-1 px-[10%] gap-8 text-[22px]">
           <div
@@ -327,17 +377,22 @@ const ProductOverView = () => {
               <h2 className="w-[30%] max-[650px]:w-[40%] max-[450px]:w-[45%] text-left max-[400px]:text-[15px] font-AbrilRegular text-[#244262]">
                 Weight
               </h2>
-              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] "> 1 kg </p>
+              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] ">
+                {" "}
+                1 kg{" "}
+              </p>
             </div>
             <div className="flex py-[1%] border-b-[1px] border-b-gray-200 items-end ">
               <h2 className="w-[30%] max-[650px]:w-[40%] max-[450px]:w-[45%] text-left max-[400px]:text-[15px] font-AbrilRegular text-[#244262]">
                 Dimensions
               </h2>
-              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] ">10 × 10 × 30 cm</p>
+              <p className="font-gorditaRegular max-[450px]:text-[17px] max-[400px]:text-[15px] ">
+                10 × 10 × 30 cm
+              </p>
             </div>
           </div>
         ) : (
-          <Reviews productId={postDetails._id} name={postDetails.name} />
+          <Reviews productId={productId} name={productData[0].name} />
         )}
       </div>
       <Footer />

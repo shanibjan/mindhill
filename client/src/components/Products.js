@@ -171,7 +171,7 @@ const Products = () => {
               {/* <div>
                     <img src={product.src} alt="" />
                 </div> */}
-                <div onClick={()=>{setPostDetails(product);nav('/overview')}} className="h-[77%]" >
+                <div onClick={()=>{nav(`/${product._id}`)}} className="h-[77%]" >
 
                 </div>
               <div className="flex justify-between absolute bottom-0 w-full p-[6%]  ">
@@ -228,7 +228,7 @@ const Products = () => {
               {/* <div>
                     <img src={product.src} alt="" />
                 </div> */}
-                <div onClick={()=>{setPostDetails(product);nav('/overview')}} className="h-[77%]" >
+                <div onClick={()=>{nav(`/${product._id}`)}} className="h-[77%]" >
                 </div>
               <div className="flex justify-between absolute bottom-0 w-full p-[6%]  ">
                 <div className="text-left text-[#244262] ">

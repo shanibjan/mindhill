@@ -384,5 +384,32 @@ router.get('/search',async(req,res)=>{
   }
 })
 
+const getProductOverview = async(req, res) => {
+  try {
+    const productId = req.params.productId;
+  // Logic to fetch product details from database using the productId
+  // Assuming you've fetched the product data:
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return res.status(400).json({ message: "Invalid product ID" });
+  }
+  const productData = await productModel.find({ _id:productId });
+
+  if(!productData){
+    return res.status(400).send({ message: "invalid productId" });
+  }
+  
+  
+  res.json(productData);
+  } catch (error) {
+    console.log(error);
+    
+  }
+  
+};
+
+router.get('/overview/:productId',getProductOverview)
+
+
+
 
 export default router;

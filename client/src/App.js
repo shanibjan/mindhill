@@ -17,49 +17,20 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
+          <Route  exact path="/"  element={<Home/>}/>
+          <Route path="/cart" element={<Cart/>} />
+          <Route path="/:productId" element={<ProductOverView />} />
+          <Route path="/wishlist" element={<WishList />} />
+          <Route element={<Login />} path="/login" />
+          <Route element={<Signup />} path="/signup" />
+          <Route element={<AdminLogin />} path="/admin_login" />
+          <Route element={<Admin />} path="/admin" />
+          <Route element={<UserOrdersForAdmin />} path="/user_orders_for_admin" />
+          <Route element={<UserOrders />} path="/user_orders" />
+          <Route element={<Search />} path="/search" />
+          <Route element={<SuccessOrder />} path="/success_order" />
 
-      <Routes>
-        <Route Component={ProductOverView} path="/overview" />
-      </Routes>
-
-     
-
-      <Routes>
-        <Route Component={WishList} path="/wishlist" />
-      </Routes>
-
-      <Routes>
-        <Route Component={Login} path="/login" />
-      </Routes>
-      <Routes>
-        <Route Component={Signup} path="/signup" />
-      </Routes>
-
-      <Routes>
-        <Route Component={AdminLogin} path="/admin_login" />
-      </Routes>
-
-      <Routes>
-        <Route Component={Admin} path="/admin" />
-      </Routes>
-
-      <Routes>
-        <Route Component={UserOrdersForAdmin} path="/user_orders_for_admin" />
-      </Routes>
-
-      <Routes>
-        <Route Component={UserOrders} path="/user_orders" />
-      </Routes>
-
-      <Routes>
-        <Route Component={Search} path="/search" />
-      </Routes>
-      <Routes>
-        <Route Component={SuccessOrder} path="/success_order" />
-      </Routes>
+        </Routes>
     </div>
   );
 }
