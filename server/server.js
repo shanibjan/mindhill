@@ -38,17 +38,12 @@ app.use('/api/v1/payment',paymentRoute);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React build folder
-  app.use(express.static(path.join(__dirname, '..', 'client','public'))); // Assuming your build folder is 'public'
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-  // For any other route, serve index.html (React SPA)
-  app.get('*', (req, res) => {
-    
-    res.sendFile(path.join(__dirname, '..', 'client','public', 'index.html'));
-  });
-}
+// Serve the index.html file for any unknown paths
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 
 

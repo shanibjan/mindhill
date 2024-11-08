@@ -114,7 +114,7 @@ const{setPostDetails}=useContext(PostContext)
               </div>
             </div>
           );
-        })} </div>): isLoading===false? (
+        })} </div>): isLoading===false ? (
           <div className="font-AbrilRegular text-[23px] text-[#244262] mt-[4%] h-[400px] max-[450px]:h-[300px] flex justify-center items-center max-[550px]:text-[15px] max-[400px]:text-[13px] "  >{a}</div>
         ):null}
       
